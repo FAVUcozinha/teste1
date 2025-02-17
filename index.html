@@ -1,21 +1,64 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>6 Meses - AR</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.min.js"></script>
+    <title>Convite Especial</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+            background-color: white;
+            font-family: 'Basic Choice 2', sans-serif;
+        }
+        .container {
+            text-align: center;
+        }
+        input {
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 20px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            margin-top: 10px;
+            padding: 8px 15px;
+            border: none;
+            background-color: #ff4d4d;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .error-message {
+            color: #ff4d4d;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
 </head>
 <body>
-    <a-scene embedded arjs>
-        <a-camera position="0 0 0"></a-camera>
+    <div class="container">
+        <p>Insira a senha para acessar:</p>
+        <input type="password" id="senha">
+        <button onclick="verificarSenha()">Abrir</button>
+        <p id="errorMessage" class="error-message"></p>
+    </div>
 
-        <!-- Corações flutuantes -->
-        <a-entity id="hearts-container"></a-entity>
-    </a-scene>
-
-    <script src="script.js"></script>
+    <script>
+        function verificarSenha() {
+            var senha = document.getElementById("senha").value;
+            if (senha === "17082024") {
+                window.location.href = "https://favucozinha.github.io/17082024/";  // Redireciona para o link desejado
+            } else {
+                document.getElementById("errorMessage").textContent = "Ixi, eu sabia que tu ia errar. 🤣 Testa com o dia mês e ano! ✨";
+            }
+        }
+    </script>
 </body>
 </html>
