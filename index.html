@@ -328,21 +328,33 @@
 
         /* Ajustes para dispositivos móveis */
         @media (max-width: 767px) {
-            .popup-conteudo {
-                width: 90%; /* Ajusta a largura para tela pequena */
-                max-width: 350px; /* Limita a largura máxima */
-            }
-
-            .popup input, 
+            /* Ajuste de largura e altura para os campos de data, horário e forma de pagamento */
+            .popup input[type="date"],
+            .popup input[type="time"],
             .popup select {
-                padding: 12px; /* Aumenta o padding para facilitar o clique */
-                font-size: 16px; /* Ajusta o tamanho da fonte para mobile */
+                width: 100%; /* Garantir que ocupe toda a largura disponível */
+                padding: 12px;
+                margin: 10px 0;
+                border: 1px solid #ccc;
+                border-radius: 20px;
+                font-family: 'Basic Choice 2', Arial, sans-serif;
+                font-size: 16px; /* Tamanho de fonte ajustado para mobile */
+                background-color: #fff; /* Fundo branco */
+                color: #000; /* Cor da letra preta */
             }
-
-            .popup button {
-                font-size: 16px; /* Ajusta o tamanho do botão para mobile */
+    
+            .popup input[type="date"]:focus,
+            .popup input[type="time"]:focus,
+            .popup select:focus {
+                border-color: #7FB1C8; /* Cor da borda no foco */
             }
-        }
+    
+    /* Ajuste geral para a largura do popup */
+    .popup-conteudo {
+        width: 90%; /* Ajusta o popup para usar mais largura na tela mobile */
+        max-width: 350px; /* Limite máximo para a largura */
+    }
+}
         
     </style>
     
