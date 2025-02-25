@@ -248,51 +248,7 @@
             color: inherit;  /* Herda a cor do nome */
         }
     
-        /* Estilos para os campos de entrada (data, horário e pagamento) */
-        input[type="date"],
-        input[type="time"],
-        select {
-            width: 100%; /* Garantir que ocupem toda a largura disponível */
-            padding: 10px; /* Espaço interno para melhorar a usabilidade */
-            font-family: 'Basic Choice 2', sans-serif; /* Usando a mesma fonte da página */
-            font-size: 16px; /* Definir o tamanho da fonte */
-            background-color: #FFF; /* Cor de fundo consistente */
-            border: 1px solid #7FB1C8; /* Cor da borda para harmonizar com os botões */
-            border-radius: 5px; /* Bordas arredondadas para combinar com os botões */
-        }
-    
-        /* Adicionando cor e fundo no campo de pagamento */
-        select {
-            background-color: #F4E6CB; /* Cor de fundo para os campos do tipo select */
-            border-color: #7FB1C8; /* Mesma cor de borda */
-        }
-    
-        /* Garantir que os campos sejam do mesmo tamanho nas versões mobile e desktop */
-        @media (max-width: 768px) {
-            input[type="date"],
-            input[type="time"],
-            select {
-                width: 100%; /* Garantir que os campos ocupem toda a largura na versão mobile */
-            }
-        }
-    
-        /* Para a versão desktop */
-        @media (min-width: 769px) {
-            input[type="date"],
-            input[type="time"],
-            select {
-                width: 48%; /* Ajusta a largura para 48% para melhor posicionamento */
-                margin-right: 4%; /* Espaço entre os campos */
-            }
-            
-            input[type="date"]:last-child,
-            input[type="time"]:last-child,
-            select:last-child {
-                margin-right: 0; /* Remove o espaço extra no último campo */
-            }
-        }
-    
-        /* Estilo para os Popups */
+        /* Estilos do Popup */
         .popup {
             display: none; 
             position: fixed; 
@@ -321,12 +277,73 @@
     
         .popup input, 
         .popup select {
-            width: 100%; /* Garante que os campos de entrada tenham o mesmo tamanho */
+            width: 100%; /* Garante que os campos de entrada tenham a largura dos botões */
             padding: 10px;
-            margin-top: 10px;
-            border-radius: 10px;
-            border: 1px solid #7FB1C8;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 20px; /* Mantém o formato arredondado */
+            font-family: 'Basic Choice 2', Arial, sans-serif;
+            box-sizing: border-box;
         }
+    
+        .popup button {
+            padding: 10px;
+            background-color: #7FB1C8;
+            color: #FFF;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 18px;
+        }
+    
+        .popup button:hover {
+            background-color: #6f97b2;
+        }
+    
+        .fechar {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+    
+        .fechar:hover,
+        .fechar:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+            
+        /* Estilo para os títulos de Nome, Data e Hora no Popup */
+        .popup label {
+            color: #000; /* Cor preta para os títulos */
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+
+        /* Ajustes para dispositivos móveis */
+        @media (max-width: 767px) {
+            .popup-conteudo {
+                width: 90%; /* Ajusta a largura para tela pequena */
+                max-width: 350px; /* Limita a largura máxima */
+            }
+
+            .popup input, 
+            .popup select {
+                padding: 12px; /* Aumenta o padding para facilitar o clique */
+                font-size: 16px; /* Ajusta o tamanho da fonte para mobile */
+            }
+
+            .popup button {
+                font-size: 16px; /* Ajusta o tamanho do botão para mobile */
+            }
+        }
+        
     </style>
     
 </head>
