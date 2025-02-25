@@ -328,7 +328,7 @@
 
         /* Ajustes para dispositivos móveis */
         @media (max-width: 767px) {
-            /* Ajuste de largura e altura para os campos de data, horário e forma de pagamento */
+            /* Ajuste de largura para os campos de data, horário e forma de pagamento */
             .popup input[type="date"],
             .popup input[type="time"],
             .popup select {
@@ -341,21 +341,41 @@
                 font-size: 16px; /* Tamanho de fonte ajustado para mobile */
                 background-color: #fff; /* Fundo branco */
                 color: #000; /* Cor da letra preta */
+                box-sizing: border-box; /* Garantir que o padding não afete a largura */
             }
-    
-            .popup input[type="date"]:focus,
-            .popup input[type="time"]:focus,
-            .popup select:focus {
-                border-color: #7FB1C8; /* Cor da borda no foco */
+
+            /* Para garantir que a lista de opções do "forma de pagamento" esteja centralizada */
+            .popup select {
+                text-align: center; /* Centralizar o texto nas opções */
             }
-    
-    /* Ajuste geral para a largura do popup */
-    .popup-conteudo {
-        width: 90%; /* Ajusta o popup para usar mais largura na tela mobile */
-        max-width: 350px; /* Limite máximo para a largura */
-    }
-}
-        
+
+            /* Garantir que os campos "data da entrega" e "horário da entrega" tenham a mesma largura do "forma de pagamento" */
+            .popup-conteudo {
+                width: 90%; /* Ajusta o popup para usar mais largura na tela mobile */
+                max-width: 350px; /* Limite máximo para a largura */
+            }
+            
+            /* Ajustes adicionais para a aparência geral do popup */
+            .popup {
+                padding: 20px;
+                border-radius: 10px;
+                width: 90%; /* Largura do popup */
+                max-width: 400px;
+                text-align: center;
+            }
+
+            .popup button {
+                padding: 12px;
+                background-color: #7FB1C8;
+                color: #FFF;
+                border: none;
+                border-radius: 20px;
+                cursor: pointer;
+                width: 100%;
+                font-size: 18px;
+            }
+        }
+  
     </style>
     
 </head>
