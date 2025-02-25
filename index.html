@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumo do Pedido</title>
+    <style>
+        caption {
+            display: block;
+            color: #E09F41; /* Muda a cor do título do grupo */
+            font-weight: bold;
+            font-size: 18px;
+        }
+    
+        /* Especificando a cor dos itens e quantidades para os grupos específicos */
+        table#tabela-bolo-tradicional th:nth-child(1),
+        table#tabela-bolo-tradicional th:nth-child(4),
+        table#tabela-bolo-especial th:nth-child(1),
+        table#tabela-bolo-especial th:nth-child(4),
+        table#tabela-prato-salgado th:nth-child(1),
+        table#tabela-prato-salgado th:nth-child(4) {
+            color: #E09F41;
+        }
+    
+        table#tabela-bolo-tradicional td:nth-child(1),
+        table#tabela-bolo-tradicional td:nth-child(4),
+        table#tabela-bolo-especial td:nth-child(1),
+        table#tabela-bolo-especial td:nth-child(4),
+        table#tabela-prato-salgado td:nth-child(1),
+        table#tabela-prato-salgado td:nth-child(4) {
+            color: #E09F41;
+        }
+    
+        table caption {
+            display: block;
+            text-align: center;
+            font-size: 20px;
+            margin-top: 10px;
+        }
+    
+        @font-face {
+            font-family: 'Basic Choice 2';
+            src: url('fonts/Basic Choice 2.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+    
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+    
+        body {
+            background-color: #E09F41;
+            text-align: center;
+            color: white;
+            font-family: 'Basic Choice 2', Arial, sans-serif;
+        }
+    
+        .container {
+            max-width: 600px;
+            margin: auto;
+        }
+    
+        img {
+            width: 100%;
+            height: auto;
+            display: block;
+            margin: 0;
+        }
+    
+        header img {
+            width: 100%;
+            height: auto;
+            display: block;
+            margin: 0;
+        }
+    
+        header img + img {
+            margin-top: 5px;
+        }
+    
+        #grupo-imagem {
+            width: 50%;
+            margin: 0 auto;
+            display: block;
+            margin-top: 5px;
+        }
+    
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+    
+        th, td {
+            padding: 10px;
+        }
+    
+        th:nth-child(1), th:nth-child(4) {
+            color: #E09F41;
+        }
+    
+        th:nth-child(2), th:nth-child(3) {
+            color: white;
+        }
+    
+        select, input {
+            text-align: center;
+        }
+    
+        button {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 20px;
+            background-color: #7FB1C8;
+            border: none;
+            color: #F4E6CB;
+            cursor: pointer;
+            font-family: 'Basic Choice 2', Arial, sans-serif;
+            width: 100%;
+            font-size: 18px;
+        }
+    
+        #resumo {
+            display: block;
+            margin-top: 20px;
+            font-weight: bold;
+            background-color: #F4E6CB;
+            color: #1A2B0F;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    
+        tr {
+            border-bottom: 1px solid #F4E6CB;
+        }
+    
+        input[type="number"] {
+            width: 60px;
+            height: 40px;
+            border: 2px solid #F4E6CB;
+            background-color: #F4E6CB;
+            color: #000;
+            font-family: 'Basic Choice 2', Arial, sans-serif;
+            font-size: 16px;
+            text-align: center;
+            vertical-align: middle;
+            border-radius: 10px;
+        }
+    
+        .erro {
+            color: red;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+    
+        footer {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    
+        footer img {
+            width: 100%;
+            height: auto;
+        }
+    
+        @media (min-width: 768px) {
+            header img {
+                content: url('topodesktop.png');
+                width: 100%;
+            }
+    
+            footer img {
+                content: url('rodadesktop.png');
+                width: 100%;
+            }
+    
+            header img:nth-of-type(2) {
+                content: url('MENU.png');
+                width: 100%;
+            }
+        }
+    
+        @media (max-width: 767px) {
+            header img:nth-of-type(2) {
+                width: 80%;
+                margin: 0 auto;
+                border: none;
+                padding: 10px;
+                border-radius: 10px;
+            }
+    
+            header img, footer img {
+                width: 100%;
+            }
+        }
+    
+        #botao-pedido {
+            margin-bottom: 50px;
+        }
+    
+        #resumo h2 {
+            font-size: 26px;
+            font-weight: bold;
+        }
+    
+        .resumo-itens {
+            text-align: left;
+            padding-left: 20px;
+        }
+    
+        footer {
+            margin-top: 30px;
+        }
+    
+        #resumo-total {
+            text-align: right;
+            font-size: 22px;
+            font-weight: bold;
+        }
+    
+        #botao-voltar {
+            background-color: #7FB1C8;
+            color: #F4E6CB;
+            font-size: 18px;
+            border: none;
+            padding: 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            font-family: 'Basic Choice 2', Arial, sans-serif;
+        }
+    
+        .item-nome {
+            font-weight: bold;
+            color: inherit;  /* Herda a cor do elemento pai */
+        }
+    
+        .descricao {
+            font-size: 12px; /* Ajuste o tamanho conforme necessário */
+            margin-top: 4px; /* Espaçamento entre o nome e a descrição */
+            color: inherit;  /* Herda a cor do nome */
+        }
+    
+        /* Estilos para os campos de entrada (data, horário e pagamento) */
+        input[type="date"],
+        input[type="time"],
+        select {
+            width: 100%; /* Garantir que ocupem toda a largura disponível */
+            padding: 10px; /* Espaço interno para melhorar a usabilidade */
+            font-family: 'Basic Choice 2', sans-serif; /* Usando a mesma fonte da página */
+            font-size: 16px; /* Definir o tamanho da fonte */
+            background-color: #FFF; /* Cor de fundo consistente */
+            border: 1px solid #7FB1C8; /* Cor da borda para harmonizar com os botões */
+            border-radius: 5px; /* Bordas arredondadas para combinar com os botões */
+        }
+    
+        /* Adicionando cor e fundo no campo de pagamento */
+        select {
+            background-color: #F4E6CB; /* Cor de fundo para os campos do tipo select */
+            border-color: #7FB1C8; /* Mesma cor de borda */
+        }
+    
+        /* Garantir que os campos sejam do mesmo tamanho nas versões mobile e desktop */
+        @media (max-width: 768px) {
+            input[type="date"],
+            input[type="time"],
+            select {
+                width: 100%; /* Garantir que os campos ocupem toda a largura na versão mobile */
+            }
+        }
+    
+        /* Para a versão desktop */
+        @media (min-width: 769px) {
+            input[type="date"],
+            input[type="time"],
+            select {
+                width: 48%; /* Ajusta a largura para 48% para melhor posicionamento */
+                margin-right: 4%; /* Espaço entre os campos */
+            }
+            
+            input[type="date"]:last-child,
+            input[type="time"]:last-child,
+            select:last-child {
+                margin-right: 0; /* Remove o espaço extra no último campo */
+            }
+        }
+    
+        /* Estilo para os Popups */
+        .popup {
+            display: none; 
+            position: fixed; 
+            z-index: 1; 
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); 
+            justify-content: center;
+            align-items: center;
+        }
+    
+        .popup-conteudo {
+            background-color: #F4E6CB;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 400px;
+            text-align: center;
+        }
+    
+        .popup h2 {
+            color: #000; /* Título do Popup em branco */
+        }
+    
+        .popup input, 
+        .popup select {
+            width: 100%; /* Garante que os campos de entrada tenham o mesmo tamanho */
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 10px;
+            border: 1px solid #7FB1C8;
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="topo.png" alt="Topo">
+            <img src="MENU.png" alt="Menu">
+        </header>
+
+        <!-- Grupo Salgado Frito -->
+        <img src="salfri.png" alt="Salgados Fritos" id="grupo-imagem">
+        <table>
+            <caption>Salgados Fritos</caption>
+            <tr>
+                <th>ITEM</th>
+                <th>QNT. MÍN.</th>
+                <th>UNID.</th>
+                <th>QUANTIDADE</th>
+            </tr>
+            <tbody id="tabela-salfri"></tbody>
+        </table>
+
+        <!-- Grupo Salgados Forno -->
+        <img src="SALFOR.png" alt="Salgados Forno" id="grupo-imagem">
+        <table>
+            <caption>Salgados Forno</caption>
+            <tr>
+                <th>ITEM</th>
+                <th>QNT. MÍN.</th>
+                <th>UNID.</th>
+                <th>QUANTIDADE</th>
+            </tr>
+            <tbody id="tabela-salgado-forno"></tbody>
+        </table>
+
+        <!-- Grupo Salgados Vegetarianos -->
+        <img src="SALVEG.png" alt="Salgados Vegetarianos" id="grupo-imagem">
+        <table>
+            <caption>Salgados Vegetarianos</caption>
+            <tr>
+                <th>ITEM</th>
+                <th>QNT. MÍN.</th>
+                <th>UNID.</th>
+                <th>QUANTIDADE</th>
+            </tr>
+            <tbody id="tabela-salgado-vegetariano"></tbody>
+        </table>
+
+        <!-- Grupo Bolos Tradicionais -->
+        <img src="BOLTRA.png" alt="Bolos Tradicionais" id="grupo-imagem">
+        <table>
+            <caption>Bolos Tradicionais</caption>
+            <tr>
+                <th>ITEM</th>
+                <th>tamanho</th>
+                <th>UNID.</th>
+                <th>QUANTIDADE</th>
+            </tr>
+            <tbody id="tabela-bolo-tradicional"></tbody>
+        </table>
+
+        <!-- Grupo Bolos Especiais -->
+        <img src="BOLESP.png" alt="Bolos Especiais" id="grupo-imagem">
+        <table>
+            <caption>Bolos Especiais</caption>
+            <tr>
+                <th>ITEM</th>
+                <th>tamanho</th>
+                <th>UNID.</th>
+                <th>QUANTIDADE</th>
+            </tr>
+            <tbody id="tabela-bolo-especial"></tbody>
+        </table>
+
+        <!-- Grupo Pratos Salgados -->
+        <img src="PRASAL.png" alt="Pratos Salgados" id="grupo-imagem">
+        <table>
+            <caption>Pratos Salgados</caption>
+            <tr>
+                <th>ITEM</th>
+                <th>tamanho</th>
+                <th>UNID.</th>
+                <th>QUANTIDADE</th>
+            </tr>
+            <tbody id="tabela-prato-salgado"></tbody>
+        </table>
+
+        <div id="resumo">
+            <h2>Resumo do Pedido</h2>
+            <div id="resumo-itens" class="resumo-itens"></div>
+            <div id="resumo-total"></div>
+            <button onclick="abrirPopup()">Fazer Pedido</button>
+        </div>
+        
+        <button id="botao-voltar" onclick="window.location.replace('https://favucozinha.github.io/Inicio/')">Voltar</button>
+        
+        <!-- Popup para inserção de dados do pedido -->
+        <div id="popup-pedido" class="popup">
+            <div class="popup-conteudo">
+                <span class="fechar" onclick="fecharPopup()">&times;</span>
+                <h2>Informações do Pedido</h2>
+                <form id="form-pedido">
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nome" name="nome" required>
+
+                    <label for="data">Data da Entrega:</label>
+                    <input type="date" id="data" name="data" required>
+
+                    <label for="horario">Horário da Entrega:</label>
+                    <input type="time" id="horario" name="horario" required>
+        
+                    <label for="pagamento">Forma de Pagamento:</label>
+                    <select id="pagamento" name="pagamento" required>
+                        <option value="Dinheiro">Dinheiro</option>
+                        <option value="Cartão">Cartão</option>
+                        <option value="Pix">Pix</option>
+                    </select>
+
+                    <button type="button" onclick="confirmarPedido()">Confirmar Pedido</button>
+                    <button onclick="fecharPopup()">Cancelar</button>                </form>
+            </div>
+        </div>
+
+
+        <footer>
+            <img src="roda2.png" alt="Rodapé">
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Definindo os itens para cada grupo
+            const itensSalgadoFrito = [
+                { nome: "Bolinho de Bacalhau", min: 20, preco: 1.00, descricaoResumo: "Bolinho de Bacalhau", descricao: "" },
+            ];
+    
+            const itensSalgadoForno = [
+                { nome: "Canudinho de Frango", min: 20, preco: 1.50, descricaoResumo: "Canudinho de Frango", descricao: "Massa Caseira Assada no Forno" },
+            ];
+    
+            const itensSalgadoVegetariano = [
+                { nome: "Canudinho de Soja", min: 20, preco: 1.50, descricaoResumo: "Canudinho de Soja", descricao: "Massa Caseira Assada no Forno" },
+            ];
+    
+            const itensBoloTradicional = [
+                { nome: "Bolo de Bem-Casado", tamanho: "P (1.5 KG)", preco: 85.00, descricaoResumo: "Bolo de Bem-Casado - P (1.5 KG)", descricao: "" },
+            ];
+    
+            const itensBoloEspecial = [
+                { nome: "Bolo de Ameixa", tamanho: "P (1.5 KG)", preco: 105.00, descricaoResumo: "Bolo de Ameixa e Chocolate Branco - P (1.5 KG)", descricao: "Com Chocolate Branco" },
+            ];
+    
+            const itensPratoSalgado = [
+                { nome: "Empadão de Bacalhau", tamanho: "P (1 KG)", preco: 95.00, descricaoResumo: "Empadão de Bacalhau - P (1 KG)", descricao: "" },
+            ];
+    
+            // Função para criar as tabelas dinamicamente
+            function criarTabelaGrupo(grupo, idTabela, nomeGrupo) {
+                const tabela = document.getElementById(idTabela);
+                if (!tabela) return;
+    
+                grupo.forEach(item => {
+                    const tr = document.createElement("tr");
+                    const qtdOutamanho = item.tamanho || item.min;
+    
+                    tr.innerHTML = `
+                        <td>
+                            <div class="item-nome">${item.nome}</div>
+                            <div class="descricao">${item.descricao}</div>
+                        </td>
+                        <td>${qtdOutamanho}</td>
+                        <td>R$ ${item.preco.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                        <td>
+                            <div class="quantidade-container">
+                                <input type="number" min="0" value="0" data-min="${item.min || 1}" data-preco="${item.preco}" data-resumo="${item.descricaoResumo}" data-grupo="${nomeGrupo}" class="quantidade-input">
+                                <div class="erro" style="color: red; display: none; font-size: 0.9em; margin-top: 5px;">
+                                    Valor mínimo do item é de ${item.min} unidades.
+                                </div>
+                            </div>
+                        </td>
+                    `;
+                    tabela.appendChild(tr);
+                });
+            }
+    
+            // Chamando a função para cada grupo de itens
+            const gruposItens = {
+                "tabela-salfri": { itens: itensSalgadoFrito, nomeGrupo: "Salgados Fritos" },
+                "tabela-salgado-forno": { itens: itensSalgadoForno, nomeGrupo: "Salgados Assados" },
+                "tabela-salgado-vegetariano": { itens: itensSalgadoVegetariano, nomeGrupo: "Salgados Vegetarianos" },
+                "tabela-bolo-tradicional": { itens: itensBoloTradicional, nomeGrupo: "Bolos Tradicionais" },
+                "tabela-bolo-especial": { itens: itensBoloEspecial, nomeGrupo: "Bolos Especiais" },
+                "tabela-prato-salgado": { itens: itensPratoSalgado, nomeGrupo: "Pratos Salgados" },
+            };
+    
+            for (const idTabela in gruposItens) {
+                criarTabelaGrupo(gruposItens[idTabela].itens, idTabela, gruposItens[idTabela].nomeGrupo);
+            }
+    
+            // Função para atualizar o total dos pedidos e gerar o resumo do site
+            function atualizarTotal() {
+                let total = 0;
+                const resumoItens = document.getElementById("resumo-itens");
+                if (!resumoItens) return;
+                resumoItens.innerHTML = '';
+    
+                const gruposResumo = {}; // Objeto para agrupar os itens pelos grupos
+    
+                document.querySelectorAll(".quantidade-input").forEach(input => {
+                    const quantidade = parseInt(input.value) || 0;
+                    const min = parseInt(input.getAttribute("data-min")) || 1;
+                    const preco = parseFloat(input.getAttribute("data-preco")) || 0;
+                    const descricaoResumo = input.getAttribute("data-resumo");
+                    const grupo = input.getAttribute("data-grupo");
+                    const erroElemento = input.closest('.quantidade-container').querySelector('.erro');
+    
+                    if (quantidade > 0 && quantidade < min) {
+                        erroElemento.style.display = 'block';
+                    } else {
+                        erroElemento.style.display = 'none';
+                    }
+    
+                    if (quantidade >= min) {
+                        const totalItem = quantidade * preco;
+                        total += totalItem;
+    
+                        // Agrupando itens pelo grupo
+                        if (!gruposResumo[grupo]) {
+                            gruposResumo[grupo] = [];
+                        }
+                        gruposResumo[grupo].push({ descricao: descricaoResumo, quantidade, totalItem });
+                    }
+                });
+    
+                // Exibindo o resumo agrupado
+                for (const grupo in gruposResumo) {
+                    resumoItens.innerHTML += `<strong>${grupo}:</strong><br>`;
+                    gruposResumo[grupo].forEach(item => {
+                        resumoItens.innerHTML += `${item.descricao} - ${item.quantidade} unidades - R$ ${item.totalItem.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}<br>`;
+                    });
+                    resumoItens.innerHTML += `<br>`; // Separando grupos
+                }
+    
+                document.getElementById("resumo-total").textContent = `Total: R$ ${total.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+                document.getElementById("resumo").style.display = total > 0 ? 'block' : 'none';
+            }
+    
+            // Atualizar total sempre que a quantidade for alterada
+            document.querySelectorAll(".quantidade-input").forEach(input => {
+                input.addEventListener("input", atualizarTotal);
+            });
+    
+            // Função para enviar o pedido para o WhatsApp
+            function confirmarPedido() {
+                let resumoWhatsapp = "Olá, Favu!\nGostaria de saber a disponibilidade para encomendar os itens abaixo:\n\n\n*_- Resumo do pedido_:*\n\n";
+                let totalPedido = 0;
+    
+                const gruposResumo = {}; // Objeto para agrupar os itens pelos grupos
+    
+                document.querySelectorAll(".quantidade-input").forEach(input => {
+                    const quantidade = parseInt(input.value) || 0;
+                    const min = parseInt(input.getAttribute("data-min")) || 1;
+                    const preco = parseFloat(input.getAttribute("data-preco")) || 0;
+                    const descricaoResumo = input.getAttribute("data-resumo");
+                    const grupo = input.getAttribute("data-grupo");
+    
+                    if (quantidade >= min) {
+                        const totalItem = quantidade * preco;
+                        totalPedido += totalItem;
+    
+                        // Agrupando itens pelo grupo
+                        if (!gruposResumo[grupo]) {
+                            gruposResumo[grupo] = [];
+                        }
+                        gruposResumo[grupo].push({ descricao: descricaoResumo, quantidade });
+                    }
+                });
+    
+                // Exibindo o resumo para o WhatsApp
+                for (const grupo in gruposResumo) {
+                    resumoWhatsapp += `*${grupo}:*\n`;
+                    gruposResumo[grupo].forEach(item => {
+                        resumoWhatsapp += `${item.descricao} - ${item.quantidade} unidades\n`;
+                    });
+                    resumoWhatsapp += `\n`; // Separando grupos
+                }
+    
+                resumoWhatsapp += `*_Total_*: R$ ${totalPedido.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    
+                // Coleta os dados do formulário
+                const nome = document.getElementById("nome").value;
+                const data = document.getElementById("data").value;
+                const horario = document.getElementById("horario").value;
+                const pagamento = document.getElementById("pagamento").value;
+    
+                // Valida se todos os campos foram preenchidos
+                if (!nome || !data || !horario || !pagamento) {
+                    alert("Por gentileza, preencha todos os campos!");
+                    return;
+                }
+    
+                // Ajustando a data para o formato dia/mês/ano
+                const dataParts = data.split("-");
+                const dataFormatada = `${dataParts[2]}/${dataParts[1]}/${dataParts[0]}`;
+    
+                // Adiciona os dados do pedido no final da mensagem
+                resumoWhatsapp += `\n\n\n\n_*- Informações do Pedido:*_\n\n*Nome*: ${nome}\n*Data da entrega*: ${dataFormatada}\n*Horário da entrega*: ${horario}\n*Forma de pagamento*: ${pagamento}`;
+    
+                // Envia a mensagem via WhatsApp
+                const whatsappLink = `https://wa.me/558199591775?text=${encodeURIComponent(resumoWhatsapp)}`;
+                window.open(whatsappLink, '_blank');
+            }
+    
+            // Adiciona evento para fazer o pedido
+            const confirmarPedidoButton = document.querySelector('button[onclick="confirmarPedido()"]');
+            if (confirmarPedidoButton) {
+                confirmarPedidoButton.addEventListener("click", confirmarPedido);
+            }
+    
+            // Função para voltar e recarregar a página
+            const voltarButton = document.getElementById("voltar");
+            if (voltarButton) {
+                voltarButton.addEventListener("click", () => window.location.reload());
+            }
+        });
+    
+        // Abre o popup
+        function abrirPopup() {
+            document.getElementById("popup-pedido").style.display = "flex";
+        }
+    
+        // Fecha o popup
+        function fecharPopup() {
+            document.getElementById("popup-pedido").style.display = "none";
+        }
+    </script>
+    
+</body>
+</html>
