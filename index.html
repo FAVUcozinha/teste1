@@ -5,39 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resumo do Pedido</title>
     <style>
-        caption {
-            display: block;
-            color: #E09F41; /* Muda a cor do título do grupo */
-            font-weight: bold;
-            font-size: 18px;
-        }
-    
-        /* Especificando a cor dos itens e quantidades para os grupos específicos */
-        table#tabela-bolo-tradicional th:nth-child(1),
-        table#tabela-bolo-tradicional th:nth-child(4),
-        table#tabela-bolo-especial th:nth-child(1),
-        table#tabela-bolo-especial th:nth-child(4),
-        table#tabela-prato-salgado th:nth-child(1),
-        table#tabela-prato-salgado th:nth-child(4) {
-            color: #E09F41;
-        }
-    
-        table#tabela-bolo-tradicional td:nth-child(1),
-        table#tabela-bolo-tradicional td:nth-child(4),
-        table#tabela-bolo-especial td:nth-child(1),
-        table#tabela-bolo-especial td:nth-child(4),
-        table#tabela-prato-salgado td:nth-child(1),
-        table#tabela-prato-salgado td:nth-child(4) {
-            color: #E09F41;
-        }
-    
-        table caption {
-            display: block;
-            text-align: center;
-            font-size: 20px;
-            margin-top: 10px;
-        }
-    
+        /* ---------------------------------------------------------------------- */
+        /* ESTILOS GERAIS E FONTES */
+        /* ---------------------------------------------------------------------- */
         @font-face {
             font-family: 'Basic Choice 2';
             src: url('fonts/Basic Choice 2.ttf') format('truetype');
@@ -51,12 +21,20 @@
             width: 100%;
             height: 100%;
         }
+
+        html {
+            /* Garante rolagem suave para todos os cliques */
+            scroll-behavior: smooth; 
+        }
     
         body {
             background-color: #E09F41;
             text-align: center;
             color: white;
             font-family: 'Basic Choice 2', Arial, sans-serif;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch; 
+            padding-bottom: 70px; /* Espaço para o rodapé fixo */
         }
     
         .container {
@@ -71,305 +49,284 @@
             margin: 0;
         }
     
-        header img {
+        header img:first-child { 
             width: 100%;
             height: auto;
             display: block;
             margin: 0;
         }
     
-        header img + img {
-            margin-top: 5px;
-        }
-    
-        #grupo-imagem {
-            width: 50%;
-            margin: 0 auto;
-            display: block;
-            margin-top: 5px;
-        }
-    
-        table {
+        /* ---------------------------------------------------------------------- */
+        /* BARRA DE NAVEGAÇÃO E BUSCA (STICKY) */
+        /* ---------------------------------------------------------------------- */
+        
+        #sticky-nav-container {
+            background-color: #E09F41; 
+            position: sticky; 
+            top: 0; 
+            z-index: 10; 
             width: 100%;
-            margin-top: 20px;
-            border-collapse: collapse;
+            padding: 10px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
-    
-        th, td {
-            padding: 10px;
+
+        #search-bar-container {
+            padding: 0 15px 10px 15px;
+            position: relative;
         }
-    
-        th:nth-child(1), th:nth-child(4) {
-            color: #E09F41;
-        }
-    
-        th:nth-child(2), th:nth-child(3) {
-            color: white;
-        }
-    
-        select, input {
-            text-align: center;
-        }
-    
-        button {
-            margin-top: 20px;
-            padding: 10px;
-            border-radius: 20px;
-            background-color: #7FB1C8;
+
+        #search-input {
+            width: 100%;
+            padding: 10px 15px;
+            border-radius: 25px;
             border: none;
-            color: #F4E6CB;
-            cursor: pointer;
-            font-family: 'Basic Choice 2', Arial, sans-serif;
-            width: 100%;
-            font-size: 18px;
-        }
-    
-        #resumo {
-            display: block;
-            margin-top: 20px;
-            font-weight: bold;
-            background-color: #F4E6CB;
-            color: #1A2B0F;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-        }
-    
-        tr {
-            border-bottom: 1px solid #F4E6CB;
-        }
-    
-        input[type="number"] {
-            width: 60px;
-            height: 40px;
-            border: 2px solid #F4E6CB;
-            background-color: #F4E6CB;
-            color: #000;
-            font-family: 'Basic Choice 2', Arial, sans-serif;
             font-size: 16px;
-            text-align: center;
-            vertical-align: middle;
-            border-radius: 10px;
-        }
-    
-        .erro {
-            color: red;
-            font-size: 14px;
-            margin-top: 10px;
-        }
-    
-        footer {
-            width: 100%;
-            margin: 0;
-            padding: 0;
-        }
-    
-        footer img {
-            width: 100%;
-            height: auto;
-        }
-    
-        @media (min-width: 768px) {
-            header img {
-                content: url('topodesktop.png');
-                width: 100%;
-            }
-    
-            footer img {
-                content: url('rodadesktop.png');
-                width: 100%;
-            }
-    
-            header img:nth-of-type(2) {
-                content: url('MENU.png');
-                width: 100%;
-            }
-        }
-    
-        @media (max-width: 767px) {
-            header img:nth-of-type(2) {
-                width: 80%;
-                margin: 0 auto;
-                border: none;
-                padding: 10px;
-                border-radius: 10px;
-            }
-    
-            header img, footer img {
-                width: 100%;
-            }
-        }
-    
-        #botao-pedido {
-            margin-bottom: 50px;
-        }
-    
-        #resumo h2 {
-            font-size: 26px;
-            font-weight: bold;
-        }
-    
-        .resumo-itens {
+            font-family: 'Basic Choice 2', Arial, sans-serif;
             text-align: left;
-            padding-left: 20px;
-        }
-    
-        footer {
-            margin-top: 30px;
-        }
-    
-        #resumo-total {
-            text-align: right;
-            font-size: 22px;
-            font-weight: bold;
-        }
-    
-        #botao-voltar {
-            background-color: #7FB1C8;
-            color: #F4E6CB;
-            font-size: 18px;
-            border: none;
-            padding: 12px;
-            border-radius: 20px;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 20px;
-            font-family: 'Basic Choice 2', Arial, sans-serif;
-        }
-    
-        .item-nome {
-            font-weight: bold;
-            color: inherit;  /* Herda a cor do elemento pai */
-        }
-    
-        .descricao {
-            font-size: 12px; /* Ajuste o tamanho conforme necessário */
-            margin-top: 4px; /* Espaçamento entre o nome e a descrição */
-            color: inherit;  /* Herda a cor do nome */
-        }
-    
-        /* Estilos do Popup */
-        .popup {
-            display: none; 
-            position: fixed; 
-            z-index: 1; 
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5); 
-            justify-content: center;
-            align-items: center;
-        }
-    
-        .popup-conteudo {
-            background-color: #F4E6CB;
-            padding: 20px;
-            border-radius: 10px;
-            width: 80%;
-            max-width: 400px;
-            text-align: center;
-        }
-    
-        .popup h2 {
-            color: #000; /* Título do Popup em branco */
-        }
-    
-        .popup input, 
-        .popup select {
-            width: 100%; /* Garante que os campos de entrada tenham a largura dos botões */
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 20px; /* Mantém o formato arredondado */
-            font-family: 'Basic Choice 2', Arial, sans-serif;
             box-sizing: border-box;
         }
-    
-        .popup button {
-            padding: 10px;
-            background-color: #7FB1C8;
-            color: #FFF;
-            border: none;
-            border-radius: 20px;
-            cursor: pointer;
-            width: 100%;
-            font-size: 18px;
-        }
-    
-        .popup button:hover {
-            background-color: #6f97b2;
-        }
-    
-        .fechar {
-            color: #aaa;
-            font-size: 28px;
-            font-weight: bold;
+        
+        #search-results {
             position: absolute;
-            top: 10px;
-            right: 10px;
-            cursor: pointer;
+            top: 100%; 
+            left: 15px;
+            right: 15px;
+            background-color: white;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 30; 
+            text-align: left;
+            padding: 0;
         }
-    
-        .fechar:hover,
-        .fechar:focus {
-            color: black;
+
+        .search-result-item {
+            padding: 10px 15px;
+            color: #1A2B0F;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+            font-size: 14px;
+            overflow: hidden; 
+            white-space: nowrap; 
+            text-overflow: ellipsis; 
+        }
+        
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+
+        .search-result-item:hover {
+            background-color: #f0f0f0;
+        }
+
+        #categorias-horizontal {
+            display: flex;
+            overflow-x: scroll; 
+            padding: 5px 10px;
+            white-space: nowrap; 
+            -webkit-overflow-scrolling: touch; 
+        }
+
+        /* Esconde a barra de rolagem horizontal */
+        #categorias-horizontal::-webkit-scrollbar {
+            display: none;
+        }
+        #categorias-horizontal {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        #categorias-horizontal a {
+            display: inline-block;
+            padding: 8px 15px;
+            margin-right: 10px;
+            background-color: #F4E6CB; 
+            color: #1A2B0F; 
             text-decoration: none;
-            cursor: pointer;
-        }
-            
-        /* Estilo para os títulos de Nome, Data e Hora no Popup */
-        .popup label {
-            color: #000; /* Cor preta para os títulos */
+            border-radius: 20px;
             font-weight: bold;
+            font-size: 14px;
+            transition: background-color 0.2s;
+            flex-shrink: 0; 
+            scroll-snap-align: start; 
+        }
+
+        #categorias-horizontal a:hover,
+        #categorias-horizontal a.active-link {
+            background-color: #7FB1C8; 
+            color: white;
+        }
+
+        /* ---------------------------------------------------------------------- */
+        /* ESTILOS DAS TABELAS (ALINHAMENTO E AGRUPAMENTO) */
+        /* ---------------------------------------------------------------------- */
+        .categoria-group img {
+            width: 50%; 
+            margin: 20px auto 10px auto;
+        }
+        
+        .categoria-group table {
+            width: 100%; 
+            border-collapse: collapse;
+        }
+
+        /* ESTILO PADRÃO DA LINHA DIVISÓRIA */
+        .categoria-group tr { 
+            border-bottom: 1px solid #F4E6CB; 
+            transition: background-color 0.3s ease-in-out; 
+        }
+        
+        /* Remove a borda inferior das linhas que iniciam ou continuam um grupo */
+        .item-group-active {
+            border-bottom: none !important;
+        }
+        
+        /* Definindo larguras para as colunas da tabela */
+        .categoria-group th:nth-child(1), .categoria-group td:nth-child(1) { width: 45%; } 
+        .categoria-group th:nth-child(2), .categoria-group td:nth-child(2) { width: 25%; } 
+        .categoria-group th:nth-child(3), .categoria-group td:nth-child(3) { width: 15%; } 
+        .categoria-group th:nth-child(4), .categoria-group td:nth-child(4) { width: 15%; } 
+
+        /* Ajustes finos para td/th */
+        th, td { 
+            padding: 10px 5px; 
+            text-align: center;
+            vertical-align: middle;
+        }
+        
+        /* Alinhamento da Coluna 1 (NÃO agrupada) */
+        .categoria-group table:not(#tabela-prato-salgado):not(#tabela-bolo-tradicional):not(#tabela-bolo-especial) td:nth-child(1) {
+            text-align: left; 
+            padding-left: 10px;
+        }
+
+        /* Alinhamento da Coluna TAMANHO/QNT. MIN. (Col. 2 nas tabelas não agrupadas / Col. 1 nas agrupadas subsequentes) */
+        .categoria-group td:nth-child(2), .categoria-group td:nth-child(1):not(.item-group-cell) {
+             text-align: center; 
+             padding-left: 5px; 
+        }
+        
+        caption { display: none; }
+        header img + img { display: none; }
+
+        /* Cores (Mantidas) */
+        table#tabela-bolo-tradicional th:nth-child(1), table#tabela-bolo-tradicional th:nth-child(4), table#tabela-bolo-especial th:nth-child(1), table#tabela-bolo-especial th:nth-child(4), table#tabela-prato-salgado th:nth-child(1), table#tabela-prato-salgado th:nth-child(4), table#tabela-doces th:nth-child(1), table#tabela-doces th:nth-child(4), table#tabela-cookies th:nth-child(1), table#tabela-cookies th:nth-child(4), table#tabela-salfri th:nth-child(1), table#tabela-salfri th:nth-child(4), table#tabela-salgado-forno th:nth-child(1), table#tabela-salgado-forno th:nth-child(4), table#tabela-salgado-vegetariano th:nth-child(1), table#tabela-salgado-vegetariano th:nth-child(4) { color: #E09F41; }
+        table#tabela-bolo-tradicional td:nth-child(1), table#tabela-bolo-tradicional td:nth-child(4), table#tabela-bolo-especial td:nth-child(1), table#tabela-bolo-especial td:nth-child(4), table#tabela-prato-salgado td:nth-child(1), table#tabela-prato-salgado td:nth-child(4), table#tabela-doces td:nth-child(1), table#tabela-doces td:nth-child(4), table#tabela-cookies td:nth-child(1), table#tabela-cookies td:nth-child(4), table#tabela-salfri td:nth-child(1), table#tabela-salfri td:nth-child(4), table#tabela-salgado-forno td:nth-child(1), table#tabela-salgado-forno td:nth-child(4), table#tabela-salgado-vegetariano td:nth-child(1), table#tabela-salgado-vegetariano td:nth-child(4) { color: white; }
+
+        th:nth-child(2), th:nth-child(3) { color: white; }
+        .item-nome { font-weight: bold; color: inherit; }
+        .descricao { font-size: 12px; margin-top: 4px; color: inherit; }
+
+        .item-group-cell {
+            text-align: center; 
+            vertical-align: middle;
+            font-size: 16px; 
+            font-weight: bold;
+            padding: 10px;
+        }
+        
+        input[type="number"] { width: 50px; height: 30px; padding: 5px; font-size: 14px; }
+        .quantidade-container { text-align: center; } 
+
+        /* ---------------------------------------------------------------------- */
+        /* RODAPÉ FIXO (RESUMO DO PEDIDO) */
+        /* ---------------------------------------------------------------------- */
+        #fixed-summary {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            max-width: 600px; 
+            margin: auto;
+            left: 0;
+            right: 0;
+            background-color: #F4E6CB; 
+            color: #1A2B0F; 
+            padding: 10px 15px;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 50; 
+            display: none; 
+            box-sizing: border-box;
+            text-align: left;
+        }
+
+        #fixed-summary .summary-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        #summary-text {
+            line-height: 1.2;
+        }
+
+        #summary-text span {
+            font-size: 12px;
+            font-weight: normal;
             display: block;
-            margin-top: 10px;
+            color: #555;
         }
 
-        /* Ajustes para dispositivos móveis */
+        #summary-total {
+            font-size: 20px;
+            font-weight: bold;
+            color: #1A2B0F;
+        }
+        
+        #summary-button {
+            background-color: #E60000; 
+            color: white;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            width: 150px;
+            text-align: center;
+            box-shadow: 0 4px #b30000; 
+            transition: background-color 0.2s;
+        }
+        
+        #summary-button:active {
+            box-shadow: 0 2px #b30000;
+            transform: translateY(2px);
+        }
+        /* ---------------------------------------------------------------------- */
+
+        /* Estilos de Botões e Popup (Mantidos) */
+        select, input { text-align: center; }
+        input[type="number"] { border: 2px solid #F4E6CB; background-color: #F4E6CB; color: #000; font-family: 'Basic Choice 2', Arial, sans-serif; text-align: center; vertical-align: middle; border-radius: 10px; }
+        button { margin-top: 20px; padding: 10px; border-radius: 20px; background-color: #7FB1C8; border: none; color: #F4E6CB; cursor: pointer; font-family: 'Basic Choice 2', Arial, sans-serif; width: 100%; font-size: 18px; }
+        #botao-voltar { background-color: #7FB1C8; color: #F4E6CB; font-size: 18px; border: none; padding: 12px; border-radius: 20px; cursor: pointer; width: 100%; margin-top: 20px; font-family: 'Basic Choice 2', Arial, sans-serif; }
+        .erro { color: red; font-size: 14px; margin-top: 10px; }
+        #resumo { display: none; margin-top: 20px; font-weight: bold; background-color: #F4E6CB; color: #1A2B0F; padding: 15px; border-radius: 10px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); }
+        #resumo h2 { font-size: 26px; font-weight: bold; }
+        .resumo-itens { text-align: left; padding-left: 20px; }
+        #resumo-total { text-align: right; font-size: 22px; font-weight: bold; }
+        footer { width: 100%; margin: 30px 0 0 0; padding: 0; }
+        footer img { width: 100%; height: auto; }
+        .popup { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); justify-content: center; align-items: center; }
+        .popup-conteudo { background-color: #F4E6CB; padding: 20px; border-radius: 10px; width: 80%; max-width: 400px; text-align: center; position: relative; }
+        .popup h2 { color: #000; }
+        .popup input, .popup select { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 20px; font-family: 'Basic Choice 2', Arial, sans-serif; box-sizing: border-box; }
+        .popup button { padding: 10px; background-color: #7FB1C8; color: #FFF; border: none; border-radius: 20px; cursor: pointer; width: 100%; font-size: 18px; }
+        .popup button:hover { background-color: #6f97b2; }
+        .fechar { color: #aaa; font-size: 28px; font-weight: bold; position: absolute; top: 10px; right: 10px; cursor: pointer; }
+        .popup label { color: #000; font-weight: bold; display: block; margin-top: 10px; }
+
+        /* Media Queries (Mantidos) */
+        @media (min-width: 768px) {
+            header img:first-child { content: url('topodesktop.png'); }
+            footer img { content: url('rodadesktop.png'); }
+            #fixed-summary {
+                 max-width: 600px; 
+            }
+        }
         @media (max-width: 767px) {
-            /* Garantindo que os campos de data e horário tenham a mesma largura que o campo nome e forma de pagamento */
-            .popup input[type="text"],
-            .popup input[type="date"],
-            .popup input[type="time"],
-            .popup select {
-                width: 100%; /* Ocupa toda a largura disponível */
-                padding: 12px; /* Tamanho do padding ajustado */
-                margin: 10px 0; /* Espaçamento entre os campos */
-                border: 1px solid #ccc;
-                border-radius: 20px; /* Bordas arredondadas */
-                font-family: 'Basic Choice 2', Arial, sans-serif;
-                font-size: 16px; /* Tamanho da fonte consistente */
-                background-color: #fff; /* Fundo branco */
-                color: #000; /* Cor da letra preta */
-                box-sizing: border-box; /* Para garantir que o padding não afete a largura */
-                height: 50px; /* Altura uniforme para todos os campos */
-            }
-
-            /* Centralizando as opções e o valor dentro do campo "forma de pagamento" */
-            .popup select {
-                text-align: center; /* Centraliza o texto das opções */
-                font-size: 16px; /* Tamanho de fonte consistente */
-            }
-
-            /* Garantindo que o popup ocupe a largura correta na versão mobile */
-            .popup-conteudo {
-                width: 90%; /* Largura do popup */
-                max-width: 350px; /* Limite máximo para a largura */
-            }
-
-            .popup button {
-                padding: 12px;
-                background-color: #7FB1C8;
-                color: #FFF;
-                border: none;
-                border-radius: 20px;
-                cursor: pointer;
-                width: 100%;
-                font-size: 18px;
-            }
+            header img:nth-of-type(2) { display: none; } 
+            header img, footer img { width: 100%; }
         }
-  
     </style>
     
 </head>
@@ -377,87 +334,130 @@
     <div class="container">
         <header>
             <img src="topo.png" alt="Topo">
-            <img src="MENU.png" alt="Menu">
         </header>
 
-        <!-- Grupo Salgado Frito -->
-        <img src="salfri.png" alt="Salgados Fritos" id="grupo-imagem">
-        <table>
-            <caption>Salgados Fritos</caption>
-            <tr>
-                <th>ITEM</th>
-                <th>QNT. MÍN.</th>
-                <th>UNID.</th>
-                <th>QUANTIDADE</th>
-            </tr>
-            <tbody id="tabela-salfri"></tbody>
-        </table>
+        <div id="sticky-nav-container">
+            <div id="search-bar-container">
+                <input type="text" id="search-input" placeholder="Buscar item ou grupo" autocomplete="off">
+                <div id="search-results" style="display: none;"></div> 
+            </div>
 
-        <!-- Grupo Salgados Forno -->
-        <img src="SALFOR.png" alt="Salgados Forno" id="grupo-imagem">
-        <table>
-            <caption>Salgados Forno</caption>
-            <tr>
-                <th>ITEM</th>
-                <th>QNT. MÍN.</th>
-                <th>UNID.</th>
-                <th>QUANTIDADE</th>
-            </tr>
-            <tbody id="tabela-salgado-forno"></tbody>
-        </table>
+            <div id="categorias-horizontal">
+                <a href="#grupo-salfri" data-target="tabela-salfri">Salgados Fritos</a>
+                <a href="#grupo-salgado-forno" data-target="tabela-salgado-forno">Salgados Forno</a>
+                <a href="#grupo-salgado-vegetariano" data-target="tabela-salgado-vegetariano">Salgados Veg</a>
+                <a href="#grupo-prato-salgado" data-target="tabela-prato-salgado">Pratos Salgados</a>
+                <a href="#grupo-bolo-tradicional" data-target="tabela-bolo-tradicional">Bolos Trad.</a>
+                <a href="#grupo-bolo-especial" data-target="tabela-bolo-especial">Bolos Espec.</a>
+                <a href="#grupo-doces" data-target="tabela-doces">Doces</a>
+                <a href="#grupo-cookies" data-target="tabela-cookies">Cookies</a>
+            </div>
+        </div>
+        
+        <div class="categoria-group" id="grupo-salfri">
+            <img src="salfri.png" alt="Salgados Fritos"> <table id="tabela-salfri">
+                <caption>Salgados Fritos</caption>
+                <tr>
+                    <th>ITEM</th>
+                    <th>QNT. MÍN.</th>
+                    <th>UNID.</th>
+                    <th>QUANTIDADE</th>
+                </tr>
+                <tbody></tbody>
+            </table>
+        </div>
 
-        <!-- Grupo Salgados Vegetarianos -->
-        <img src="SALVEG.png" alt="Salgados Vegetarianos" id="grupo-imagem">
-        <table>
-            <caption>Salgados Vegetarianos</caption>
-            <tr>
-                <th>ITEM</th>
-                <th>QNT. MÍN.</th>
-                <th>UNID.</th>
-                <th>QUANTIDADE</th>
-            </tr>
-            <tbody id="tabela-salgado-vegetariano"></tbody>
-        </table>
+        <div class="categoria-group" id="grupo-salgado-forno">
+            <img src="SALFOR.png" alt="Salgados Forno"> <table id="tabela-salgado-forno">
+                <caption>Salgados Forno</caption>
+                <tr>
+                    <th>ITEM</th>
+                    <th>QNT. MÍN.</th>
+                    <th>UNID.</th>
+                    <th>QUANTIDADE</th>
+                </tr>
+                <tbody></tbody>
+            </table>
+        </div>
 
-        <!-- Grupo Bolos Tradicionais -->
-        <img src="BOLTRA.png" alt="Bolos Tradicionais" id="grupo-imagem">
-        <table>
-            <caption>Bolos Tradicionais</caption>
-            <tr>
-                <th>ITEM</th>
-                <th>tamanho</th>
-                <th>UNID.</th>
-                <th>QUANTIDADE</th>
-            </tr>
-            <tbody id="tabela-bolo-tradicional"></tbody>
-        </table>
+        <div class="categoria-group" id="grupo-salgado-vegetariano">
+            <img src="SALVEG.png" alt="Salgados Vegetarianos"> <table id="tabela-salgado-vegetariano">
+                <caption>Salgados Vegetarianos</caption>
+                <tr>
+                    <th>ITEM</th>
+                    <th>QNT. MÍN.</th>
+                    <th>UNID.</th>
+                    <th>QUANTIDADE</th>
+                </tr>
+                <tbody></tbody>
+            </table>
+        </div>
+        
+        <div class="categoria-group" id="grupo-prato-salgado">
+            <img src="PRASAL.png" alt="Pratos Salgados"> <table id="tabela-prato-salgado">
+                <caption>Pratos Salgados</caption>
+                <tr>
+                    <th>ITEM</th>
+                    <th>tamanho</th>
+                    <th>UNID.</th>
+                    <th>QUANTIDADE</th>
+                </tr>
+                <tbody></tbody>
+            </table>
+        </div>
 
-        <!-- Grupo Bolos Especiais -->
-        <img src="BOLESP.png" alt="Bolos Especiais" id="grupo-imagem">
-        <table>
-            <caption>Bolos Especiais</caption>
-            <tr>
-                <th>ITEM</th>
-                <th>tamanho</th>
-                <th>UNID.</th>
-                <th>QUANTIDADE</th>
-            </tr>
-            <tbody id="tabela-bolo-especial"></tbody>
-        </table>
+        <div class="categoria-group" id="grupo-bolo-tradicional">
+            <img src="BOLTRA.png" alt="Bolos Tradicionais"> <table id="tabela-bolo-tradicional">
+                <caption>Bolos Tradicionais</caption>
+                <tr>
+                    <th>ITEM</th>
+                    <th>tamanho</th>
+                    <th>UNID.</th>
+                    <th>QUANTIDADE</th>
+                </tr>
+                <tbody></tbody>
+            </table>
+        </div>
 
-        <!-- Grupo Pratos Salgados -->
-        <img src="PRASAL.png" alt="Pratos Salgados" id="grupo-imagem">
-        <table>
-            <caption>Pratos Salgados</caption>
-            <tr>
-                <th>ITEM</th>
-                <th>tamanho</th>
-                <th>UNID.</th>
-                <th>QUANTIDADE</th>
-            </tr>
-            <tbody id="tabela-prato-salgado"></tbody>
-        </table>
+        <div class="categoria-group" id="grupo-bolo-especial">
+            <img src="BOLESP.png" alt="Bolos Especiais"> <table id="tabela-bolo-especial">
+                <caption>Bolos Especiais</caption>
+                <tr>
+                    <th>ITEM</th>
+                    <th>tamanho</th>
+                    <th>UNID.</th>
+                    <th>QUANTIDADE</th>
+                </tr>
+                <tbody></tbody>
+            </table>
+        </div>
 
+        <div class="categoria-group" id="grupo-doces">
+            <img src="DOCS.png" alt="Doces"> <table id="tabela-doces">
+                <caption>Doces</caption>
+                <tr>
+                    <th>ITEM</th>
+                    <th>QNT. MÍN.</th>
+                    <th>UNID.</th>
+                    <th>QUANTIDADE</th>
+                </tr>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div class="categoria-group" id="grupo-cookies">
+            <img src="cookies.png" alt="Cookies"> <table id="tabela-cookies">
+                <caption>Cookies</caption>
+                <tr>
+                    <th>ITEM</th>
+                    <th>QNT. MÍN.</th>
+                    <th>UNID.</th>
+                    <th>QUANTIDADE</th>
+                </tr>
+                <tbody></tbody>
+            </table>
+        </div>
+        
         <div id="resumo">
             <h2>Resumo do Pedido</h2>
             <div id="resumo-itens" class="resumo-itens"></div>
@@ -467,7 +467,6 @@
         
         <button id="botao-voltar" onclick="window.location.replace('https://favucozinha.github.io/Inicio/')">Voltar</button>
         
-        <!-- Popup para inserção de dados do pedido -->
         <div id="popup-pedido" class="popup">
             <div class="popup-conteudo">
                 <span class="fechar" onclick="fecharPopup()">&times;</span>
@@ -481,7 +480,7 @@
 
                     <label for="horario">Horário da Entrega:</label>
                     <input type="time" id="horario" name="horario" required>
-        
+                
                     <label for="pagamento">Forma de Pagamento:</label>
                     <select id="pagamento" name="pagamento" required>
                         <option value="Dinheiro">Dinheiro</option>
@@ -490,10 +489,21 @@
                     </select>
 
                     <button type="button" onclick="confirmarPedido()">Confirmar Pedido</button>
-                    <button onclick="fecharPopup()">Cancelar</button>                </form>
+                    <button type="button" onclick="fecharPopup()">Cancelar</button>
+                </form>
             </div>
         </div>
-
+        
+        <div id="fixed-summary">
+            <div class="summary-content">
+                <div id="summary-text">
+                    <div id="summary-total">R$ 0,00</div>
+                    <span>Total sem a entrega</span>
+                    <span id="summary-item-count"> / 0 itens</span>
+                </div>
+                <button id="summary-button" onclick="scrollToElement(document.getElementById('resumo'))">Ver Pedido</button>
+            </div>
+        </div>
 
         <footer>
             <img src="roda2.png" alt="Rodapé">
@@ -501,213 +511,583 @@
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // Definindo os itens para cada grupo
-            const itensSalgadoFrito = [
-                { nome: "Mini Quibe", min: 25, preco: 1.10, descricaoResumo: "Mini Quibe de Carne C/ Queijo", descricao: "De Carne Com Queijo" },
-            ];
+        // -----------------------------------------------------
+        // DADOS DOS PRODUTOS
+        // -----------------------------------------------------
+        
+        const generateId = (nome, tamanho) => {
+            let base = nome.toLowerCase().replace(/[^a-z0-9]/g, '-');
+            if (tamanho) {
+                base += '-' + tamanho.toLowerCase().replace(/[^a-z0-9]/g, '');
+            }
+            return base.replace(/-+/g, '-').trim('-');
+        };
+        
+        const addGroupKeys = (itens) => {
+            return itens.map(item => ({
+                ...item,
+                groupKey: item.tamanho ? item.nome : item.id 
+            }));
+        };
+
+        const itensBoloTradicional = addGroupKeys([
+            { nome: "Bolo de Bem-Casado", tamanho: "P (1.5 KG)", preco: 90.00, descricaoResumo: "Bolo de Bem-Casado - P (1.5 KG)", descricao: ""},
+            { nome: "Bolo de Bem-Casado", tamanho: "M (2.5 KG)", preco: 150.00, descricaoResumo: "Bolo de Bem-Casado - M (2.5 KG)", descricao: ""},
+            { nome: "Bolo de Bem-Casado", tamanho: "G (3.5 KG)", preco: 210.00, descricaoResumo: "Bolo de Bem-Casado - G (3.5 KG)", descricao: ""},
+            { nome: "Bolo de Doce de Leite", tamanho: "P (1.5 KG)", preco: 90.00, descricaoResumo: "Bolo de Doce de Leite e Crocante de Amendoin - P (1.5 KG)", descricao: "Com Crocante de Amendoin"},
+            { nome: "Bolo de Doce de Leite", tamanho: "M (2.5 KG)", preco: 150.00, descricaoResumo: "Bolo de Doce de Leite e Crocante de Amendoin - M (2.5 KG)", descricao: "Com Crocante de Amendoin"},
+            { nome: "Bolo de Doce de Leite", tamanho: "G (3.5 KG)", preco: 210.00, descricaoResumo: "Bolo de Doce de Leite e Crocante de Amendoin - G (3.5 KG)", descricao: "Com Crocante de Amendoin"},
+            { nome: "Bolo de Chocolate", tamanho: "P (1.5 KG)", preco: 90.00, descricaoResumo: "Bolo de Chocolate 50% Cacau - P (1.5 KG)", descricao: "Com chocolate 50% cacau"},
+            { nome: "Bolo de Chocolate", tamanho: "M (2.5 KG)", preco: 150.00, descricaoResumo: "Bolo de Chocolate 50% Cacau - M (2.5 KG)", descricao: "Com chocolate 50% cacau"},
+            { nome: "Bolo de Chocolate", tamanho: "G (3.5 KG)", preco: 210.00, descricaoResumo: "Bolo de Chocolate 50% Cacau - G (3.5 KG)", descricao: "Com chocolate 50% cacau"},
+            { nome: "Bolo de Limão", tamanho: "P (1.5 KG)", preco: 90.00, descricaoResumo: "Bolo de Limão e Chocolate Branco - P (1.5 KG)", descricao: "Com Cholocate Branco"},
+            { nome: "Bolo de Limão", tamanho: "M (2.5 KG)", preco: 150.00, descricaoResumo: "Bolo de Limão e Chocolate Branco - M (2.5 KG)", descricao: "Com Cholocate Branco"},
+            { nome: "Bolo de Limão", tamanho: "G (3.5 KG)", preco: 210.00, descricaoResumo: "Bolo de Limão e Chocolate Branco - G (3.5 KG)", descricao: "Com Cholocate Branco"},
+            { nome: "Bolo de Maracujá", tamanho: "P (1.5 KG)", preco: 90.00, descricaoResumo: "Bolo de Maracujá e Chocolate Branco - P (1.5 KG)", descricao: "Com Cholocate Branco"},
+            { nome: "Bolo de Maracujá", tamanho: "M (2.5 KG)", preco: 150.00, descricaoResumo: "Bolo de Maracujá e Chocolate Branco - M (2.5 KG)", descricao: "Com Cholocate Branco"},
+            { nome: "Bolo de Maracujá", tamanho: "G (3.5 KG)", preco: 210.00, descricaoResumo: "Bolo de Maracujá e Chocolate Branco - G (3.5 KG)", descricao: "Com Cholocate Branco"},
+        ]).map(item => ({...item, id: generateId(item.nome, item.tamanho)}));
     
-            const itensSalgadoForno = [
-                { nome: "Canudinho de Frango", min: 20, preco: 1.50, descricaoResumo: "Canudinho de Frango", descricao: "Massa Caseira Assada no Forno" },
-            ];
+        const itensBoloEspecial = addGroupKeys([
+            { nome: "Bolo de Ameixa", tamanho: "P (1.5 KG)", preco: 105.00, descricaoResumo: "Bolo de Ameixa e Chocolate Branco - P (1.5 KG)", descricao: "Com Chocolate Branco"},
+            { nome: "Bolo de Ameixa", tamanho: "M (2.5 KG)", preco: 175.00, descricaoResumo: "Bolo de Ameixa e Chocolate Branco - M (2.5 KG)", descricao: "Com Chocolate Branco"},
+            { nome: "Bolo de Ameixa", tamanho: "G (3.5 KG)", preco: 245.00, descricaoResumo: "Bolo de Ameixa e Chocolate Branco - G (3.5 KG)", descricao: "Com Chocolate Branco"},
+            { nome: "Bolo de Café e Doce de Leite", tamanho: "P (1.5 KG)", preco: 105.00, descricaoResumo: "Bolo de Café Com Doce de Leite e Chocolate Amargo - P (1.5 KG)", descricao:"Com Chocolate Amargo"},
+            { nome: "Bolo de Café e Doce de Leite", tamanho: "M (2.5 KG)", preco: 175.00, descricaoResumo: "Bolo de Café Com Doce de Leite e Chocolate Amargo - M (2.5 KG)", descricao:"Com Chocolate Amargo"},
+            { nome: "Bolo de Café e Doce de Leite", tamanho: "G (3.5 KG)", preco: 245.00, descricaoResumo: "Bolo de Café Com Doce de Leite e Chocolate Amargo - G (3.5 KG)", descricao:"Com Chocolate Amargo"},
+            { nome: "Bolo de Chocolate 50%", tamanho: "P (1.5 KG)", preco: 105.00, descricaoResumo: "Bolo de Chocolate 50% com Morangos - P (1.5 KG)", descricao:"Com Morangos"},
+            { nome: "Bolo de Chocolate 50%", tamanho: "M (2.5 KG)", preco: 175.00, descricaoResumo: "Bolo de Chocolate 50% com Morangos - M (2.5 KG)", descricao:"Com Morangos"},
+            { nome: "Bolo de Chocolate 50%", tamanho: "G (3.5 KG)", preco: 245.00, descricaoResumo: "Bolo de Chocolate 50% com Morangos - G (3.5 KG)", descricao:"Com Morangos"},
+            { nome: "Bolo de Delicia de Abacaxi", tamanho: "P (1.5 KG)", preco: 105.00, descricaoResumo: "Bolo de Delicia de Abacaxi - P (1.5 KG)", descricao: ""},
+            { nome: "Bolo de Delicia de Abacaxi", tamanho: "M (2.5 KG)", preco: 175.00, descricaoResumo: "Bolo de Delicia de Abacaxi - M (2.5 KG)", descricao: ""},
+            { nome: "Bolo de Delicia de Abacaxi", tamanho: "G (3.5 KG)", preco: 245.00, descricaoResumo: "Bolo de Delicia de Abacaxi - G (3.5 KG)", descricao: ""},
+            { nome: "Bolo de Morango", tamanho: "P (1.5 KG)", preco: 105.00, descricaoResumo: "Bolo de Morango com Brigadeiro Branco e Chantinhinho - P (1.5 KG)", descricao: "Com Recheio de Brigadeiro Branco e Cobertura de Chantininho"},
+            { nome: "Bolo de Morango", tamanho: "M (2.5 KG)", preco: 175.00, descricaoResumo: "Bolo de Morango com Brigadeiro Branco e Chantinhinho - M (2.5 KG)", descricao: "Com Recheio de Brigadeiro Branco e Cobertura de Chantininho"},
+            { nome: "Bolo de Morango", tamanho: "G (3.5 KG)", preco: 245.00, descricaoResumo: "Bolo de Morango com Brigadeiro Branco e Chantinhinho - G (3.5 KG)", descricao: "Com Recheio de Brigadeiro Branco e Cobertura de Chantininho"},
+            { nome: "Bolo Prestígio", tamanho: "P (1.5 KG)", preco: 105.00, descricaoResumo: "Bolo Prestígio - P (1.5 KG)", descricao: ""},
+            { nome: "Bolo Prestígio", tamanho: "M (2.5 KG)", preco: 175.00, descricaoResumo: "Bolo Prestígio - M (2.5 KG)", descricao: ""},
+            { nome: "Bolo Prestígio", tamanho: "G (3.5 KG)", preco: 245.00, descricaoResumo: "Bolo Prestígio - G (3.5 KG)", descricao: ""},
+        ]).map(item => ({...item, id: generateId(item.nome, item.tamanho)}));
+
+        const itensDoces = addGroupKeys([
+            { nome: "Beijinho", min: 30, preco: 1.00, descricaoResumo: "Beijinho", descricao: "" },
+            { nome: "Bem-casado", min: 30, preco: 1.00, descricaoResumo: "Bem-casado", descricao: "" },
+            { nome: "Brigadeiro", min: 30, preco: 1.00, descricaoResumo: "Brigadeiro", descricao: "" },
+            { nome: "Mini Tortilete", min: 30, preco: 1.20, descricaoResumo: "Mini Tortilete", descricao: "" },
+            { nome: "Moranguinho", min: 30, preco: 1.00, descricaoResumo: "Moranguinho", descricao: "" },
+            { nome: "Ouriço", min: 30, preco: 1.10, descricaoResumo: "Ouriço", descricao: "" },
+            { nome: "Queijadinha", min: 30, preco: 1.20, descricaoResumo: "Queijadinha", descricao: "" },
+            { nome: "Surpresa de uva", min: 30, preco: 1.20, descricaoResumo: "Surpresa de uva", descricao: "" },
+        ]).map(item => ({...item, id: generateId(item.nome)}));
+
+        const itensCookies = addGroupKeys([
+            { nome: "Cookie Tradicional", min: 3, preco: 12.00, descricaoResumo: "Cookie Tradicional", descricao: "Massa de baunilha com pedaços de chocolate meio amargo" },
+            { nome: "Cookie Red Velvet", min: 3, preco: 12.00, descricaoResumo: "Cookie Red Velvet", descricao: "Massa de baunilha com toque de cream cheese, cacau vermelho e pedaços de chocolate branco" },
+            { nome: "Cookie Black", min: 3, preco: 12.00, descricaoResumo: "Cookie Black", descricao: "Massa feita com cacau 100% e pedaços de chocolate meio amargo" },
+            { nome: "Cookie Romeu e Julieta", min: 3, preco: 12.00, descricaoResumo: "Cookie Romeu e Julieta", descricao: "Massa de baunilha com pedacinhos de queijo, recheado com cream cheese e goiabada" },
+        ]).map(item => ({...item, id: generateId(item.nome)}));
+
+        const itensSalgadoFrito = addGroupKeys([
+            { nome: "Bolinho de Bacalhau", min: 25, preco: 1.00, descricaoResumo: "Bolinho de Bacalhau", descricao: "" },
+            { nome: "Bolinho de Calabresa", min: 25, preco: 0.90, descricaoResumo: "Bolinho de Calabresa", descricao: "" },
+            { nome: "Bolinho de Charque", min: 25, preco: 1.00, descricaoResumo: "Bolinho de Charque", descricao: "" },
+            { nome: "Coxinha de Frango", min: 25, preco: 0.90, descricaoResumo: "Coxinha de Frango", descricao: "" },
+            { nome: "Croquete Misto", min: 25, preco: 0.90, descricaoResumo: "Croquere Misto", descricao: "De Presunto Com Queijo" },
+            { nome: "Camarão Empanado", min: 25, preco: 1.40, descricaoResumo: "Camarão Empanado", descricao: "" },
+            { nome: "Mini Quibe", min: 25, preco: 1.10, descricaoResumo: "Mini Quibe de Carne C/ Queijo", descricao: "De Carne Com Queijo" },
+            { nome: "Pastel de Festa", min: 25, preco: 1.20, descricaoResumo: "Pastel de Festa", descricao: "" },
+        ]).map(item => ({...item, id: generateId(item.nome)}));
+
+        const itensSalgadoForno = addGroupKeys([
+            { nome: "Canudinho de Frango", min: 25, preco: 1.50, descricaoResumo: "Canudinho de Frango", descricao: "Massa Caseira Assada no Forno" },
+            { nome: "Empadinha de Bacalhau", min: 25, preco: 1.00, descricaoResumo: "Empadinha de Bacalhau", descricao: "" },
+            { nome: "Empadinha de Camarão", min: 25, preco: 1.00, descricaoResumo: "Empadinha de Camarão", descricao: "" },
+            { nome: "Empadinha de Carne", min: 25, preco: 0.90, descricaoResumo: "Empadinha de Carne", descricao: "" },
+            { nome: "Empadinha de Frango", min: 25, preco: 0.90, descricaoResumo: "Empadinha de Frango", descricao: "" },
+            { nome: "Mini Folhado de Carne", min: 25, preco: 2.10, descricaoResumo: "Mini Folhado de Carne", descricao: "" },
+            { nome: "Mini Folhado de Frango", min: 25, preco: 2.10, descricaoResumo: "Mini Folhado de Frango", descricao: "" },
+            { nome: "Mini Folhado de Queijo", min: 20, preco: 2.10, descricaoResumo: "Mini Folhado de Queijo", descricao: "" },
+            { nome: "Mini Folhado de Pizza", min: 25, preco: 2.10, descricaoResumo: "Mini Folhado de Pizza", descricao: "" },
+            { nome: "Mini Enroladinho", min: 25, preco: 1.00, descricaoResumo: "Mini Enroladinho de salsicha", descricao: "Com Salsicha" },
+            { nome: "Pastel de Forno de Bacalhau", min: 25, preco: 1.20, descricaoResumo: "Pastel de Forno de Bacalhau", descricao: "" },
+            { nome: "Pastel de Forno de Camarão", min: 25, preco: 1.20, descricaoResumo: "Pastel de Forno de Camarão", descricao: "" },
+            { nome: "Pastel de Forno de Carne", min: 25, preco: 0.90, descricaoResumo: "Pastel de Forno de Carne", descricao: "" },
+            { nome: "Pastel de Forno de Frango", min: 25, preco: 0.90, descricaoResumo: "Pastel de Forno de Frango", descricao: "" },
+            { nome: "Pastel de Forno de Queijo", min: 25, preco: 0.90, descricaoResumo: "Pastel de Forno de Queijo", descricao: "" },
+            { nome: "Pastel de Forno de Pizza", min: 25, preco: 0.90, descricaoResumo: "Pastel de Forno de Pizza", descricao: "" },
+        ]).map(item => ({...item, id: generateId(item.nome)}));
     
-            const itensSalgadoVegetariano = [
-                { nome: "Canudinho de Soja", min: 20, preco: 1.50, descricaoResumo: "Canudinho de Soja", descricao: "Massa Caseira Assada no Forno" },
-            ];
-    
-            const itensBoloTradicional = [
-                { nome: "Bolo de Bem-Casado", tamanho: "P (1.5 KG)", preco: 85.00, descricaoResumo: "Bolo de Bem-Casado - P (1.5 KG)", descricao: "" },
-            ];
-    
-            const itensBoloEspecial = [
-                { nome: "Bolo de Ameixa", tamanho: "P (1.5 KG)", preco: 105.00, descricaoResumo: "Bolo de Ameixa e Chocolate Branco - P (1.5 KG)", descricao: "Com Chocolate Branco" },
-            ];
-    
-            const itensPratoSalgado = [
-                { nome: "Empadão de Bacalhau", tamanho: "P (1 KG)", preco: 95.00, descricaoResumo: "Empadão de Bacalhau - P (1 KG)", descricao: "" },
-            ];
-    
-            // Função para criar as tabelas dinamicamente
-            function criarTabelaGrupo(grupo, idTabela, nomeGrupo) {
-                const tabela = document.getElementById(idTabela);
-                if (!tabela) return;
-    
-                grupo.forEach(item => {
-                    const tr = document.createElement("tr");
-                    const qtdOutamanho = item.tamanho || item.min;
-    
+        const itensSalgadoVegetariano = addGroupKeys([
+            { nome: "Canudinho de Soja", min: 25, preco: 1.50, descricaoResumo: "Canudinho de Soja", descricao: "Massa Caseira Assada no Forno" },
+            { nome: "Coxinha de Soja", min: 25, preco: 0.90, descricaoResumo: "Coxinha de SOJA", descricao: "" },
+            { nome: "Coxinha de Caju *", min: 25, preco: 1.10, descricaoResumo: "Coxinha de CAJU", descricao: "* CONSULTAR DISPONIBILIDADE *" },
+            { nome: "Empadinha de Creme de Aborbinha", min: 25, preco: 0.90, descricaoResumo: "Empadinha de Aborbinha Com Queijo", descricao: "Com Queijo" },
+            { nome: "Empadinha de Falso Camarão", min: 25, preco: 0.90, descricaoResumo: "Empadinha de Falso Camarão", descricao: "A Base de Milho e Leite de Coco" },
+            { nome: "Pastel de Festa Vegetariano", min: 25, preco: 1.20, descricaoResumo: "Pastel de Festa de SOJA", descricao: "De Soja" },
+            { nome: "Pastel de Forno Creme de Abobrinha", min: 25, preco: 0.90, descricaoResumo: "Pastel de Forno Abobrinha C/ Queijo", descricao: "Com Queijo" },
+            { nome: "Pastel de Forno Caju *", min: 25, preco: 1.20, descricaoResumo: "Pastel de Forno Caju", descricao: "* CONSULTAR DISPONIBILIDADE *" },
+        ]).map(item => ({...item, id: generateId(item.nome)}));
+
+        const itensPratoSalgado = addGroupKeys([
+            { nome: "Empadão de Bacalhau", tamanho: "P (1 KG)", preco: 95.00, descricaoResumo: "Empadão de Bacalhau - P (1 KG)", descricao: ""},
+            { nome: "Empadão de Bacalhau", tamanho: "M (2 KG)", preco: 190.00, descricaoResumo: "Empadão de Bacalhau - M (2 KG)", descricao: ""},
+            { nome: "Empadão de Bacalhau", tamanho: "G (3 KG)", preco: 285.00, descricaoResumo: "Empadão de Bacalhau - G (3 KG)", descricao: ""},
+            { nome: "Empadão de Carne", tamanho: "P (1 KG)", preco: 65.00, descricaoResumo: "Empadão de Carne - P (1 KG)", descricao: ""},
+            { nome: "Empadão de Carne", tamanho: "M (2 KG)", preco: 130.00, descricaoResumo: "Empadão de Carne - M (2 KG)", descricao: ""},
+            { nome: "Empadão de Carne", tamanho: "G (3 KG)", preco: 195.00, descricaoResumo: "Empadão de Carne - G (3 KG)", descricao: ""},
+            { nome: "Empadão de Camarão", tamanho: "P (1 KG)", preco: 95.00, descricaoResumo: "Empadão de Camarão - P (1 KG)", descricao: ""},
+            { nome: "Empadão de Camarão", tamanho: "M (2 KG)", preco: 190.00, descricaoResumo: "Empadão de Camarão - M (2 KG)", descricao: ""},
+            { nome: "Empadão de Camarão", tamanho: "G (3 KG)", preco: 285.00, descricaoResumo: "Empadão de Camarão - G (3 KG)", descricao: ""},
+            { nome: "Empadão de Frango", tamanho: "P (1 KG)", preco: 65.00, descricaoResumo: "Empadão de Frango - P (1 KG)", descricao: ""},
+            { nome: "Empadão de Frango", tamanho: "M (2 KG)", preco: 130.00, descricaoResumo: "Empadão de Frango - M (2 KG)", descricao: ""},
+            { nome: "Empadão de Frango", tamanho: "G (3 KG)", preco: 195.00, descricaoResumo: "Empadão de Frango - G (3 KG)", descricao: ""},
+            { nome: "Fricassê de Frango", tamanho: "P (1 KG)", preco: 75.00, descricaoResumo: "Fricassê de Frango - P (1 KG)", descricao: ""},
+            { nome: "Fricassê de Frango", tamanho: "M (2 KG)", preco: 150.00, descricaoResumo: "Fricassê de Frango - M (2 KG)", descricao: ""},
+            { nome: "Fricassê de Frango", tamanho: "G (3 KG)", preco: 225.00, descricaoResumo: "Fricassê de Frango - G (3 KG)", descricao: ""},
+            { nome: "Quiche de Camarão", tamanho: "P (1 KG)", preco: 110.00, descricaoResumo: "Quiche de Camarão - P (1 KG)", descricao: ""},
+            { nome: "Quiche de Camarão", tamanho: "M (2 KG)", preco: 220.00, descricaoResumo: "Quiche de Camarão - M (2 KG)", descricao: ""},
+            { nome: "Quiche de Camarão", tamanho: "G (3 KG)", preco: 330.00, descricaoResumo: "Quiche de Camarão - G (3 KG)", descricao: ""},
+            { nome: "Quiche de Frango", tamanho: "P (1 KG)", preco: 80.00, descricaoResumo: "Quiche de Frango - P (1 KG)", descricao: "Com Alho Poró"},
+            { nome: "Quiche de Frango", tamanho: "M (2 KG)", preco: 160.00, descricaoResumo: "Quiche de Frango - M (2 KG)", descricao: "Com Alho Poró"},
+            { nome: "Quiche de Frango", tamanho: "G (3 KG)", preco: 240.00, descricaoResumo: "Quiche de Frango - G (3 KG)", descricao: "Com Alho Poró"},
+            { nome: "Rocambole de Bacalhau", tamanho: "P (1 KG)", preco: 95.00, descricaoResumo: "Rocambole de Bacalhau - P (1 KG)", descricao: "Massa de Batata"},
+            { nome: "Rocambole de Bacalhau", tamanho: "M (2 KG)", preco: 190.00, descricaoResumo: "Rocambole de Bacalhau - M (2 KG)", descricao: "Massa de Batata"},
+            { nome: "Rocambole de Bacalhau", tamanho: "G (3 KG)", preco: 285.00, descricaoResumo: "Rocambole de Bacalhau - G (3 KG)", descricao: "Massa de Batata"},
+            { nome: "Rocambole de Camarão", tamanho: "P (1 KG)", preco: 95.00, descricaoResumo: "Rocambole de Camarão - P (1 KG)", descricao: "Massa de Batata"},
+            { nome: "Rocambole de Camarão", tamanho: "M (2 KG)", preco: 190.00, descricaoResumo: "Rocambole de Camarão - M (2 KG)", descricao: "Massa de Batata"},
+            { nome: "Rocambole de Camarão", tamanho: "G (3 KG)", preco: 285.00, descricaoResumo: "Rocambole de Camarão - G (3 KG)", descricao: "Massa de Batata"},
+            { nome: "Rocambole de Carne", tamanho: "P (1 KG)", preco: 65.00, descricaoResumo: "Rocambole de Carne - P (1 KG)", descricao: "Massa de Batata"},
+            { nome: "Rocambole de Carne", tamanho: "M (2 KG)", preco: 130.00, descricaoResumo: "Rocambole de Carne - M (2 KG)", descricao: "Massa de Batata"},
+            { nome: "Rocambole de Carne", tamanho: "G (3 KG)", preco: 195.00, descricaoResumo: "Rocambole de Carne - G (3 KG)", descricao: "Massa de Batata"},
+            { nome: "Rocambole de Frango", tamanho: "P (1 KG)", preco: 65.00, descricaoResumo: "Rocambole de Frango - P (1 KG)", descricao: "Massa de Batata"},
+            { nome: "Rocambole de Frango", tamanho: "M (2 KG)", preco: 130.00, descricaoResumo: "Rocambole de Frango - M (2 KG)", descricao: "Massa de Batata"},
+            { nome: "Rocambole de Frango", tamanho: "G (3 KG)", preco: 195.00, descricaoResumo: "Rocambole de Frango - G (3 KG)", descricao: "Massa de Batata"},
+            { nome: "Torta Salgada de Bacalhau", tamanho: "P (1 KG)", preco: 95.00, descricaoResumo: "Torta Salgada de Bacalhau - P (1 KG)", descricao: ""},
+            { nome: "Torta Salgada de Bacalhau", tamanho: "M (2 KG)", preco: 190.00, descricaoResumo: "Torta Salgada de Bacalhau - M (2 KG)", descricao: ""},
+            { nome: "Torta Salgada de Bacalhau", tamanho: "G (3 KG)", preco: 285.00, descricaoResumo: "Torta Salgada de Bacalhau - G (3 KG)", descricao: ""},
+            { nome: "Torta Salgada de Carne", tamanho: "P (1 KG)", preco: 65.00, descricaoResumo: "Torta Salgada de Carne - P (1 KG)", descricao: ""},
+            { nome: "Torta Salgada de Carne", tamanho: "M (2 KG)", preco: 130.00, descricaoResumo: "Torta Salgada de Carne - M (2 KG)", descricao: ""},
+            { nome: "Torta Salgada de Carne", tamanho: "G (3 KG)", preco: 195.00, descricaoResumo: "Torta Salgada de Carne - G (3 KG)", descricao: ""},
+            { nome: "Torta Salgada de Camarão", tamanho: "P (1 KG)", preco: 95.00, descricaoResumo: "Torta Salgada de Camarão - P (1 KG)", descricao: ""},
+            { nome: "Torta Salgada de Camarão", tamanho: "M (2 KG)", preco: 190.00, descricaoResumo: "Torta Salgada de Camarão - M (2 KG)", descricao: ""},
+            { nome: "Torta Salgada de Camarão", tamanho: "G (3 KG)", preco: 285.00, descricaoResumo: "Torta Salgada de Camarão - G (3 KG)", descricao: ""},
+            { nome: "Torta Salgada de Frango", tamanho: "P (1 KG)", preco: 65.00, descricaoResumo: "Torta Salgada de Frango - P (1 KG)", descricao: ""},
+            { nome: "Torta Salgada de Frango", tamanho: "M (2 KG)", preco: 130.00, descricaoResumo: "Torta Salgada de Frango - M (2 KG)", descricao: ""},
+            { nome: "Torta Salgada de Frango", tamanho: "G (3 KG)", preco: 195.00, descricaoResumo: "Torta Salgada de Frango - G (3 KG)", descricao: ""},
+        ]).map(item => ({...item, id: generateId(item.nome, item.tamanho)}));
+
+        
+        // Mapeamento de todos os grupos
+        const gruposItens = {
+            "tabela-bolo-tradicional": { itens: itensBoloTradicional, nomeGrupo: "Bolos Tradicionais", img: "BOLTRA.png" },
+            "tabela-bolo-especial": { itens: itensBoloEspecial, nomeGrupo: "Bolos Especiais", img: "BOLESP.png" },
+            "tabela-doces": { itens: itensDoces, nomeGrupo: "Doces", img: "DOCS.png" },
+            "tabela-cookies": { itens: itensCookies, nomeGrupo: "Cookies", img: "cookies.png" }, 
+            "tabela-salfri": { itens: itensSalgadoFrito, nomeGrupo: "Salgados Fritos", img: "salfri.png" },
+            "tabela-salgado-forno": { itens: itensSalgadoForno, nomeGrupo: "Salgados Assados", img: "SALFOR.png" },
+            "tabela-salgado-vegetariano": { itens: itensSalgadoVegetariano, nomeGrupo: "Salgados Vegetarianos", img: "SALVEG.png" },
+            "tabela-prato-salgado": { itens: itensPratoSalgado, nomeGrupo: "Pratos Salgados", img: "PRASAL.png" },
+        };
+        
+        // Array com TODOS os itens para a busca
+        let todosOsItens = [];
+        for (const idTabela in gruposItens) {
+            gruposItens[idTabela].itens.forEach(item => {
+                todosOsItens.push({
+                    nome: item.descricaoResumo,
+                    id: item.id, 
+                    grupoId: "grupo-" + idTabela.replace("tabela-", "")
+                });
+            });
+        }
+        
+        // -----------------------------------------------------
+        // FUNÇÃO DE CRIAÇÃO DE TABELAS
+        // -----------------------------------------------------
+        function criarTabelaGrupo(grupo, idTabela, nomeGrupo) {
+            const tbody = document.getElementById(idTabela).querySelector('tbody');
+            if (!tbody) return;
+
+            let grupoAtual = null;
+            let countGrupo = 0;
+            
+            const isGroupedTable = idTabela.includes('bolo') || idTabela.includes('prato');
+
+            for (let i = 0; i < grupo.length; i++) {
+                const item = grupo[i];
+                const tr = document.createElement("tr");
+                const coluna2 = item.tamanho || item.min; 
+                const precoFormatado = item.preco.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                const itemId = item.id;
+                
+                let isFirstInGroup = false;
+                
+                if (isGroupedTable) {
+                    if (item.groupKey !== grupoAtual) {
+                        grupoAtual = item.groupKey;
+                        isFirstInGroup = true;
+                        countGrupo = 1;
+                        let j = i + 1;
+                        while (j < grupo.length && grupo[j].groupKey === grupoAtual) {
+                            countGrupo++;
+                            j++;
+                        }
+                    }
+                    
+                    if (item.groupKey === grupoAtual && i < grupo.length - 1 && grupo[i+1].groupKey === grupoAtual) {
+                         tr.classList.add('item-group-active');
+                    }
+                }
+                
+                
+                // INJEÇÃO DO HTML DA LINHA
+                if (isGroupedTable && isFirstInGroup) {
                     tr.innerHTML = `
-                        <td>
+                        <td rowspan="${countGrupo}" class="item-group-cell">
                             <div class="item-nome">${item.nome}</div>
-                            <div class="descricao">${item.descricao}</div>
+                            ${item.descricao ? `<div class="descricao">${item.descricao}</div>` : ''}
                         </td>
-                        <td>${qtdOutamanho}</td>
-                        <td>R$ ${item.preco.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                        <td id="item-${itemId}">${coluna2}</td>
+                        <td>R$ ${precoFormatado}</td>
                         <td>
                             <div class="quantidade-container">
-                                <input type="number" min="0" value="0" data-min="${item.min || 1}" data-preco="${item.preco}" data-resumo="${item.descricaoResumo}" data-grupo="${nomeGrupo}" class="quantidade-input">
+                                <input type="number" min="0" value="0" data-min="${item.min || 1}" data-preco="${item.preco}" data-resumo="${item.descricaoResumo}" data-grupo="${nomeGrupo}" data-item-id="${itemId}" class="quantidade-input">
                                 <div class="erro" style="color: red; display: none; font-size: 0.9em; margin-top: 5px;">
-                                    Valor mínimo do item é de ${item.min} unidades.
+                                    Mín. ${item.min || 1} un.
                                 </div>
                             </div>
                         </td>
                     `;
-                    tabela.appendChild(tr);
-                });
-            }
-    
-            // Chamando a função para cada grupo de itens
-            const gruposItens = {
-                "tabela-salfri": { itens: itensSalgadoFrito, nomeGrupo: "Salgados Fritos" },
-                "tabela-salgado-forno": { itens: itensSalgadoForno, nomeGrupo: "Salgados Assados" },
-                "tabela-salgado-vegetariano": { itens: itensSalgadoVegetariano, nomeGrupo: "Salgados Vegetarianos" },
-                "tabela-bolo-tradicional": { itens: itensBoloTradicional, nomeGrupo: "Bolos Tradicionais" },
-                "tabela-bolo-especial": { itens: itensBoloEspecial, nomeGrupo: "Bolos Especiais" },
-                "tabela-prato-salgado": { itens: itensPratoSalgado, nomeGrupo: "Pratos Salgados" },
-            };
-    
-            for (const idTabela in gruposItens) {
-                criarTabelaGrupo(gruposItens[idTabela].itens, idTabela, gruposItens[idTabela].nomeGrupo);
-            }
-    
-            // Função para atualizar o total dos pedidos e gerar o resumo do site
-            function atualizarTotal() {
-                let total = 0;
-                const resumoItens = document.getElementById("resumo-itens");
-                if (!resumoItens) return;
-                resumoItens.innerHTML = '';
-    
-                const gruposResumo = {}; // Objeto para agrupar os itens pelos grupos
-    
-                document.querySelectorAll(".quantidade-input").forEach(input => {
-                    const quantidade = parseInt(input.value) || 0;
-                    const min = parseInt(input.getAttribute("data-min")) || 1;
-                    const preco = parseFloat(input.getAttribute("data-preco")) || 0;
-                    const descricaoResumo = input.getAttribute("data-resumo");
-                    const grupo = input.getAttribute("data-grupo");
-                    const erroElemento = input.closest('.quantidade-container').querySelector('.erro');
-    
-                    if (quantidade > 0 && quantidade < min) {
-                        erroElemento.style.display = 'block';
-                    } else {
-                        erroElemento.style.display = 'none';
-                    }
-    
-                    if (quantidade >= min) {
-                        const totalItem = quantidade * preco;
-                        total += totalItem;
-    
-                        // Agrupando itens pelo grupo
-                        if (!gruposResumo[grupo]) {
-                            gruposResumo[grupo] = [];
-                        }
-                        gruposResumo[grupo].push({ descricao: descricaoResumo, quantidade, totalItem });
-                    }
-                });
-    
-                // Exibindo o resumo agrupado
-                for (const grupo in gruposResumo) {
-                    resumoItens.innerHTML += `<strong>${grupo}:</strong><br>`;
-                    gruposResumo[grupo].forEach(item => {
-                        resumoItens.innerHTML += `${item.descricao} - ${item.quantidade} unidades - R$ ${item.totalItem.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}<br>`;
-                    });
-                    resumoItens.innerHTML += `<br>`; // Separando grupos
+                } else if (isGroupedTable && !isFirstInGroup) {
+                    tr.innerHTML = `
+                        <td id="item-${itemId}">${coluna2}</td>
+                        <td>R$ ${precoFormatado}</td>
+                        <td>
+                            <div class="quantidade-container">
+                                <input type="number" min="0" value="0" data-min="${item.min || 1}" data-preco="${item.preco}" data-resumo="${item.descricaoResumo}" data-grupo="${nomeGrupo}" data-item-id="${itemId}" class="quantidade-input">
+                                <div class="erro" style="color: red; display: none; font-size: 0.9em; margin-top: 5px;">
+                                    Mín. ${item.min || 1} un.
+                                </div>
+                            </div>
+                        </td>
+                    `;
+                } else {
+                     tr.innerHTML = `
+                         <td>
+                            <div class="item-nome" id="item-${itemId}">${item.nome}</div>
+                            ${item.descricao ? `<div class="descricao">${item.descricao}</div>` : ''}
+                        </td>
+                        <td>${coluna2}</td>
+                        <td>R$ ${precoFormatado}</td>
+                        <td>
+                            <div class="quantidade-container">
+                                <input type="number" min="0" value="0" data-min="${item.min || 1}" data-preco="${item.preco}" data-resumo="${item.descricaoResumo}" data-grupo="${nomeGrupo}" data-item-id="${itemId}" class="quantidade-input">
+                                <div class="erro" style="color: red; display: none; font-size: 0.9em; margin-top: 5px;">
+                                    Mín. ${item.min || 1} un.
+                                </div>
+                            </div>
+                        </td>
+                     `;
                 }
-    
-                document.getElementById("resumo-total").textContent = `Total: R$ ${total.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-                document.getElementById("resumo").style.display = total > 0 ? 'block' : 'none';
+                
+                tbody.appendChild(tr);
             }
-    
-            // Atualizar total sempre que a quantidade for alterada
+        }
+        
+        // -----------------------------------------------------
+        // FUNÇÃO DE ATUALIZAÇÃO DO TOTAL (E DO RODAPÉ FIXO)
+        // -----------------------------------------------------
+        function atualizarTotal() {
+            let total = 0;
+            let totalItens = 0;
+            const resumoItens = document.getElementById("resumo-itens");
+            const fixedSummary = document.getElementById("fixed-summary");
+            
+            if (!resumoItens || !fixedSummary) return;
+            resumoItens.innerHTML = '';
+
+            const gruposResumo = {}; 
+
             document.querySelectorAll(".quantidade-input").forEach(input => {
-                input.addEventListener("input", atualizarTotal);
-            });
-    
-            // Função para enviar o pedido para o WhatsApp
-            function confirmarPedido() {
-                let resumoWhatsapp = "Olá, Favu!\nGostaria de saber a disponibilidade para encomendar os itens abaixo:\n\n\n*_- Resumo do pedido_:*\n\n";
-                let totalPedido = 0;
-    
-                const gruposResumo = {}; // Objeto para agrupar os itens pelos grupos
-    
-                document.querySelectorAll(".quantidade-input").forEach(input => {
-                    const quantidade = parseInt(input.value) || 0;
-                    const min = parseInt(input.getAttribute("data-min")) || 1;
-                    const preco = parseFloat(input.getAttribute("data-preco")) || 0;
-                    const descricaoResumo = input.getAttribute("data-resumo");
-                    const grupo = input.getAttribute("data-grupo");
-    
-                    if (quantidade >= min) {
-                        const totalItem = quantidade * preco;
-                        totalPedido += totalItem;
-    
-                        // Agrupando itens pelo grupo
-                        if (!gruposResumo[grupo]) {
-                            gruposResumo[grupo] = [];
-                        }
-                        gruposResumo[grupo].push({ descricao: descricaoResumo, quantidade });
+                const quantidade = parseInt(input.value) || 0;
+                const min = parseInt(input.getAttribute("data-min")) || 1;
+                const preco = parseFloat(input.getAttribute("data-preco")) || 0;
+                const descricaoResumo = input.getAttribute("data-resumo");
+                const grupo = input.getAttribute("data-grupo");
+                const erroElemento = input.closest('.quantidade-container').querySelector('.erro');
+
+                if (quantidade > 0 && quantidade < min) {
+                    erroElemento.style.display = 'block';
+                } else {
+                    erroElemento.style.display = 'none';
+                }
+
+                if (quantidade >= min) {
+                    const totalItem = quantidade * preco;
+                    total += totalItem;
+                    totalItens += quantidade;
+
+                    if (!gruposResumo[grupo]) {
+                        gruposResumo[grupo] = [];
                     }
+                    gruposResumo[grupo].push({ descricao: descricaoResumo, quantidade, totalItem });
+                }
+            });
+            
+            const totalFormatado = total.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+            // 1. Atualiza a seção Resumo do Pedido (no corpo da página)
+            for (const grupo in gruposResumo) {
+                resumoItens.innerHTML += `<strong>${grupo}:</strong><br>`;
+                gruposResumo[grupo].forEach(item => {
+                    resumoItens.innerHTML += `${item.descricao} - ${item.quantidade} unidades - R$ ${item.totalItem.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}<br>`;
                 });
-    
-                // Exibindo o resumo para o WhatsApp
-                for (const grupo in gruposResumo) {
-                    resumoWhatsapp += `*${grupo}:*\n`;
-                    gruposResumo[grupo].forEach(item => {
-                        resumoWhatsapp += `${item.descricao} - ${item.quantidade} unidades\n`;
-                    });
-                    resumoWhatsapp += `\n`; // Separando grupos
-                }
-    
-                resumoWhatsapp += `*_Total_*: R$ ${totalPedido.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-    
-                // Coleta os dados do formulário
-                const nome = document.getElementById("nome").value;
-                const data = document.getElementById("data").value;
-                const horario = document.getElementById("horario").value;
-                const pagamento = document.getElementById("pagamento").value;
-    
-                // Valida se todos os campos foram preenchidos
-                if (!nome || !data || !horario || !pagamento) {
-                    alert("Por gentileza, preencha todos os campos!");
-                    return;
-                }
-    
-                // Ajustando a data para o formato dia/mês/ano
-                const dataParts = data.split("-");
-                const dataFormatada = `${dataParts[2]}/${dataParts[1]}/${dataParts[0]}`;
-    
-                // Adiciona os dados do pedido no final da mensagem
-                resumoWhatsapp += `\n\n\n\n_*- Informações do Pedido:*_\n\n*Nome*: ${nome}\n*Data da entrega*: ${dataFormatada}\n*Horário da entrega*: ${horario}\n*Forma de pagamento*: ${pagamento}`;
-    
-                // Envia a mensagem via WhatsApp
-                const whatsappLink = `https://wa.me/558199591775?text=${encodeURIComponent(resumoWhatsapp)}`;
-                window.open(whatsappLink, '_blank');
+                resumoItens.innerHTML += `<br>`; 
             }
-    
-            // Adiciona evento para fazer o pedido
-            const confirmarPedidoButton = document.querySelector('button[onclick="confirmarPedido()"]');
-            if (confirmarPedidoButton) {
-                confirmarPedidoButton.addEventListener("click", confirmarPedido);
+
+            document.getElementById("resumo-total").textContent = `Total: R$ ${totalFormatado}`;
+            document.getElementById("resumo").style.display = total > 0 ? 'block' : 'none';
+
+            // 2. Atualiza e exibe o Rodapé Fixo
+            if (total > 0) {
+                document.getElementById("summary-total").textContent = `R$ ${totalFormatado}`;
+                document.getElementById("summary-item-count").textContent = ` / ${totalItens} ${totalItens === 1 ? 'item' : 'itens'}`;
+                fixedSummary.style.display = 'block';
+            } else {
+                fixedSummary.style.display = 'none';
             }
-    
-            // Função para voltar e recarregar a página
-            const voltarButton = document.getElementById("voltar");
-            if (voltarButton) {
-                voltarButton.addEventListener("click", () => window.location.reload());
-            }
-        });
-    
-        // Abre o popup
+        }
+        
         function abrirPopup() {
             document.getElementById("popup-pedido").style.display = "flex";
         }
     
-        // Fecha o popup
         function fecharPopup() {
             document.getElementById("popup-pedido").style.display = "none";
         }
+        
+        function resetarCampos() {
+            document.querySelectorAll(".quantidade-input").forEach(input => {
+                input.value = 0;
+            });
+            const resumoItens = document.getElementById("resumo-itens");
+            const resumoTotal = document.getElementById("resumo-total");
+            if (resumoItens) resumoItens.innerHTML = '';
+            if (resumoTotal) resumoTotal.textContent = '';
+            fecharPopup();
+            atualizarTotal();
+            window.scrollTo(0, 0);
+        }
+
+        function confirmarPedido() {
+            let resumoWhatsapp = "Olá, Favu!\nGostaria de saber a disponibilidade para encomendar os itens abaixo:\n\n\n*_- Resumo do pedido_:*\n\n";
+            let totalPedido = 0;
+
+            const gruposResumo = {}; 
+
+            document.querySelectorAll(".quantidade-input").forEach(input => {
+                const quantidade = parseInt(input.value) || 0;
+                const min = parseInt(input.getAttribute("data-min")) || 1;
+                const preco = parseFloat(input.getAttribute("data-preco")) || 0;
+                const descricaoResumo = input.getAttribute("data-resumo");
+                const grupo = input.getAttribute("data-grupo");
+
+                if (quantidade >= min) {
+                    const totalItem = quantidade * preco;
+                    totalPedido += totalItem;
+
+                    if (!gruposResumo[grupo]) {
+                        gruposResumo[grupo] = [];
+                    }
+                    gruposResumo[grupo].push({ descricao: descricaoResumo, quantidade });
+                }
+            });
+
+            for (const grupo in gruposResumo) {
+                resumoWhatsapp += `*${grupo}:*\n`;
+                gruposResumo[grupo].forEach(item => {
+                    resumoWhatsapp += `${item.descricao} - ${item.quantidade} unidades\n`;
+                });
+                resumoWhatsapp += `\n`; 
+            }
+
+            resumoWhatsapp += `*_Total_*: R$ ${totalPedido.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+            const nome = document.getElementById("nome").value;
+            const data = document.getElementById("data").value;
+            const horario = document.getElementById("horario").value;
+            const pagamento = document.getElementById("pagamento").value;
+
+            if (!nome || !data || !horario || !pagamento) {
+                alert("Por gentileza, preencha todos os campos!");
+                return;
+            }
+
+            const dataParts = data.split("-");
+            const dataFormatada = `${dataParts[2]}/${dataParts[1]}/${dataParts[0]}`;
+
+            resumoWhatsapp += `\n\n\n\n_*- Informações do Pedido:*_\n\n*Nome*: ${nome}\n*Data da entrega*: ${dataFormatada}\n*Horário da entrega*: ${horario}\n*Forma de pagamento*: ${pagamento}`;
+
+            const whatsappLink = `https://wa.me/558199591775?text=${encodeURIComponent(resumoWhatsapp)}`;
+            window.open(whatsappLink, '_blank');
+
+            resetarCampos();
+        }
+
+
+        // -----------------------------------------------------
+        // ROLAGEM ÚNICA E PRECISA
+        // -----------------------------------------------------
+
+        function scrollToElement(targetElement) {
+            if (targetElement) {
+                const mainHeader = document.querySelector('header');
+                const stickyNav = document.getElementById('sticky-nav-container');
+                const offset = stickyNav.offsetHeight + mainHeader.offsetHeight + 10; 
+                
+                window.scrollTo({
+                    top: targetElement.offsetTop - offset,
+                    // 'behavior: smooth' está no CSS do HTML, garantindo a suavidade em todos os cliques.
+                });
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            
+            // 1. Cria as tabelas
+            for (const idTabela in gruposItens) {
+                criarTabelaGrupo(gruposItens[idTabela].itens, idTabela, gruposItens[idTabela].nomeGrupo);
+            }
+
+            // 2. Evento para atualizar o total
+            document.querySelectorAll(".quantidade-input").forEach(input => {
+                input.addEventListener("input", atualizarTotal);
+            });
+            
+            // 3. Evento de Rolagem (Tabs horizontais)
+            const categoriasBar = document.getElementById('categorias-horizontal');
+            const links = categoriasBar.querySelectorAll('a');
+            
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetTableId = this.getAttribute('data-target');
+                    // Rola para a DIV pai da tabela (a div .categoria-group)
+                    const targetGroup = document.getElementById(targetTableId).closest('.categoria-group'); 
+                    scrollToElement(targetGroup);
+                });
+            });
+
+            // 4. Highlight na barra horizontal ao rolar (Performance otimizada)
+            const groupElements = document.querySelectorAll('.categoria-group');
+            const mainHeader = document.querySelector('header');
+            const stickyNav = document.getElementById('sticky-nav-container');
+            
+            const observerOffset = stickyNav.offsetHeight + mainHeader.offsetHeight + 10;
+            
+            const observerOptions = {
+                rootMargin: `-${observerOffset}px 0px 0px 0px`, 
+                threshold: 0 
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    const targetTable = entry.target.querySelector('table');
+                    if (!targetTable) return;
+                    
+                    const targetTableId = targetTable.id;
+                    const link = categoriasBar.querySelector(`a[data-target="${targetTableId}"]`);
+                    
+                    if (link) {
+                        if (entry.isIntersecting) {
+                            links.forEach(l => l.classList.remove('active-link'));
+                            link.classList.add('active-link');
+                            link.scrollIntoView({ behavior: 'smooth', inline: 'center' }); 
+                        }
+                    }
+                });
+            }, observerOptions);
+
+            groupElements.forEach(group => {
+                observer.observe(group);
+            });
+            
+            // -----------------------------------------------------
+            // 5. LÓGICA DE BUSCA (FUNCIONAL) - ROLAGEM EXATA
+            // -----------------------------------------------------
+            const searchInput = document.getElementById('search-input');
+            const searchResultsDiv = document.getElementById('search-results');
+            
+            const clearSearch = () => {
+                searchResultsDiv.innerHTML = '';
+                searchResultsDiv.style.display = 'none';
+            };
+
+            // Filtra os itens ao digitar
+            searchInput.addEventListener('input', function() {
+                const termo = this.value.toLowerCase().trim();
+                clearSearch();
+
+                if (termo.length < 2) return;
+
+                const resultadosItens = todosOsItens.filter(item => 
+                    item.nome.toLowerCase().includes(termo)
+                ).slice(0, 5); 
+
+                if (resultadosItens.length > 0) {
+                    resultadosItens.forEach(item => {
+                        const div = document.createElement('div');
+                        div.className = 'search-result-item';
+                        div.textContent = item.nome;
+                        div.dataset.itemId = item.id;
+                        
+                        // Evento de clique no resultado
+                        div.addEventListener('click', function() {
+                            const targetItemId = this.dataset.itemId;
+                            
+                            let targetElement = document.getElementById(`item-${targetItemId}`); 
+                            
+                            if (targetElement) {
+                                const tr = targetElement.closest('tr');
+                                
+                                if (tr) {
+                                    scrollToElement(tr); 
+
+                                    // Efeito visual rápido para destacar o item (TR)
+                                    tr.style.transition = 'background-color 0.3s ease-in-out';
+                                    tr.style.backgroundColor = 'rgba(255, 255, 255, 0.2)'; 
+                                    setTimeout(() => {
+                                        tr.style.backgroundColor = 'transparent';
+                                    }, 1500);
+                                }
+                            }
+                            // Limpa e esconde
+                            searchInput.value = item.nome;
+                            clearSearch();
+                        });
+                        searchResultsDiv.appendChild(div);
+                    });
+                    searchResultsDiv.style.display = 'block';
+                }
+            });
+            
+            // Esconde resultados ao clicar fora da busca
+            document.addEventListener('click', function(event) {
+                if (event.target !== searchInput && !document.getElementById('search-bar-container').contains(event.target)) {
+                    clearSearch();
+                }
+            });
+            
+            // -----------------------------------------------------
+            
+            const confirmarPedidoButton = document.querySelector('button[onclick="confirmarPedido()"]');
+            if (confirmarPedidoButton) {
+                confirmarPedidoButton.addEventListener("click", confirmarPedido);
+            }
+
+            atualizarTotal();
+        });
     </script>
-    
     
 </body>
 </html>
