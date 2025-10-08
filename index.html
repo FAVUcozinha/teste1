@@ -6,7 +6,7 @@
     <title>Resumo do Pedido</title>
     <style>
         /* ---------------------------------------------------------------------- */
-        /* ESTILOS GERAIS E FONTES */
+        /* ESTILOS GERAIS E FONTES - MANTIDOS */
         /* ---------------------------------------------------------------------- */
         @font-face {
             font-family: 'Basic Choice 2';
@@ -14,7 +14,7 @@
             font-weight: normal;
             font-style: normal;
         }
-    
+        
         html, body {
             margin: 0;
             padding: 0;
@@ -22,11 +22,6 @@
             height: 100%;
         }
 
-        html {
-            /* Garante rolagem suave para todos os cliques */
-            scroll-behavior: smooth; 
-        }
-    
         body {
             background-color: #E09F41;
             text-align: center;
@@ -36,28 +31,28 @@
             -webkit-overflow-scrolling: touch; 
             padding-bottom: 70px; /* Espaço para o rodapé fixo */
         }
-    
+        
         .container {
             max-width: 600px;
             margin: auto;
         }
-    
+        
         img {
             width: 100%;
             height: auto;
             display: block;
             margin: 0;
         }
-    
+        
         header img:first-child { 
             width: 100%;
             height: auto;
             display: block;
             margin: 0;
         }
-    
+        
         /* ---------------------------------------------------------------------- */
-        /* BARRA DE NAVEGAÇÃO E BUSCA (STICKY) */
+        /* BARRA DE NAVEGAÇÃO (STICKY) - MANTIDOS */
         /* ---------------------------------------------------------------------- */
         
         #sticky-nav-container {
@@ -66,58 +61,8 @@
             top: 0; 
             z-index: 10; 
             width: 100%;
-            padding: 10px 0;
+            padding: 5px 0; 
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-
-        #search-bar-container {
-            padding: 0 15px 10px 15px;
-            position: relative;
-        }
-
-        #search-input {
-            width: 100%;
-            padding: 10px 15px;
-            border-radius: 25px;
-            border: none;
-            font-size: 16px;
-            font-family: 'Basic Choice 2', Arial, sans-serif;
-            text-align: left;
-            box-sizing: border-box;
-        }
-        
-        #search-results {
-            position: absolute;
-            top: 100%; 
-            left: 15px;
-            right: 15px;
-            background-color: white;
-            border-radius: 0 0 10px 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            max-height: 200px;
-            overflow-y: auto;
-            z-index: 30; 
-            text-align: left;
-            padding: 0;
-        }
-
-        .search-result-item {
-            padding: 10px 15px;
-            color: #1A2B0F;
-            cursor: pointer;
-            border-bottom: 1px solid #eee;
-            font-size: 14px;
-            overflow: hidden; 
-            white-space: nowrap; 
-            text-overflow: ellipsis; 
-        }
-        
-        .search-result-item:last-child {
-            border-bottom: none;
-        }
-
-        .search-result-item:hover {
-            background-color: #f0f0f0;
         }
 
         #categorias-horizontal {
@@ -152,15 +97,29 @@
             scroll-snap-align: start; 
         }
 
-        #categorias-horizontal a:hover,
+        #categorias-horizontal a:hover {
+            background-color: #c9bda5;
+        }
+        
+        /* Estilo da aba ATIVA */
         #categorias-horizontal a.active-link {
             background-color: #7FB1C8; 
             color: white;
         }
 
         /* ---------------------------------------------------------------------- */
-        /* ESTILOS DAS TABELAS (ALINHAMENTO E AGRUPAMENTO) */
+        /* ESTILOS DAS TABELAS (e dos grupos para o filtro) - MANTIDOS */
         /* ---------------------------------------------------------------------- */
+        .categoria-group {
+            transition: opacity 0.3s ease; 
+            display: none;
+        }
+        
+        /* Sobrescreve para mostrar o grupo ATIVO */
+        .categoria-group.active-group {
+            display: block;
+        }
+        
         .categoria-group img {
             width: 50%; 
             margin: 20px auto 10px auto;
@@ -174,6 +133,12 @@
         /* ESTILO PADRÃO DA LINHA DIVISÓRIA */
         .categoria-group tr { 
             border-bottom: 1px solid #F4E6CB; 
+            transition: background-color 0.3s ease-in-out; 
+        }
+
+        /* CLASSE DE DESTAQUE PARA EDIÇÃO */
+        .highlight-edit { 
+            background-color: rgba(255, 255, 0, 0.4) !important; /* Destaque amarelo-claro */
             transition: background-color 0.3s ease-in-out; 
         }
         
@@ -226,11 +191,43 @@
             padding: 10px;
         }
         
-        input[type="number"] { width: 50px; height: 30px; padding: 5px; font-size: 14px; }
-        .quantidade-container { text-align: center; } 
+        /* Estilos do Input de Quantidade na Tabela Principal */
+        .quantidade-container { 
+            text-align: center; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+            margin: 0;
+        }
+
+        .quantidade-container input[type="number"] { 
+            width: 90%; 
+            height: 40px; 
+            padding: 5px; 
+            font-size: 16px; 
+            font-family: 'Basic Choice 2', Arial, sans-serif;
+            text-align: center;
+            background-color: #F4E6CB; 
+            border: 2px solid #F4E6CB; 
+            color: #1A2B0F; 
+            border-radius: 10px; 
+            box-sizing: border-box;
+            
+            -moz-appearance: textfield; /* Firefox */
+        }
+        
+        /* OCULTAÇÃO DE SETAS: Aplicado a ambos os inputs numéricos */
+        .quantidade-container input[type="number"]::-webkit-outer-spin-button,
+        .quantidade-container input[type="number"]::-webkit-inner-spin-button,
+        .resumo-item-input-group input::-webkit-outer-spin-button, 
+        .resumo-item-input-group input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
 
         /* ---------------------------------------------------------------------- */
-        /* RODAPÉ FIXO (RESUMO DO PEDIDO) */
+        /* RODAPÉ FIXO (RESUMO DO PEDIDO) - MANTIDOS */
         /* ---------------------------------------------------------------------- */
         #fixed-summary {
             position: fixed;
@@ -273,9 +270,10 @@
             color: #1A2B0F;
         }
         
+        /* Cor do botão de rodapé "Ver Pedido" alterada para o AZUL ESPECÍFICO */
         #summary-button {
-            background-color: #E60000; 
-            color: white;
+            background-color: #7FB1C8; /* AZUL SOLICITADO */
+            color: white; 
             padding: 12px 20px;
             border-radius: 10px;
             font-weight: bold;
@@ -284,36 +282,327 @@
             border: none;
             width: 150px;
             text-align: center;
-            box-shadow: 0 4px #b30000; 
+            box-shadow: 0 4px #4c7e93; /* Sombra ajustada para o azul */
             transition: background-color 0.2s;
         }
         
         #summary-button:active {
-            box-shadow: 0 2px #b30000;
+            box-shadow: 0 2px #4c7e93;
             transform: translateY(2px);
         }
         /* ---------------------------------------------------------------------- */
 
-        /* Estilos de Botões e Popup (Mantidos) */
+        /* Estilos de Botões e Popup - MANTIDOS/AJUSTADOS */
         select, input { text-align: center; }
-        input[type="number"] { border: 2px solid #F4E6CB; background-color: #F4E6CB; color: #000; font-family: 'Basic Choice 2', Arial, sans-serif; text-align: center; vertical-align: middle; border-radius: 10px; }
-        button { margin-top: 20px; padding: 10px; border-radius: 20px; background-color: #7FB1C8; border: none; color: #F4E6CB; cursor: pointer; font-family: 'Basic Choice 2', Arial, sans-serif; width: 100%; font-size: 18px; }
-        #botao-voltar { background-color: #7FB1C8; color: #F4E6CB; font-size: 18px; border: none; padding: 12px; border-radius: 20px; cursor: pointer; width: 100%; margin-top: 20px; font-family: 'Basic Choice 2', Arial, sans-serif; }
+        
+        /* Input do Pop-up e Input da Tabela principal (para padronizar) */
+        .popup input[type="number"] {
+            background-color: #F4E6CB; 
+            border: 1px solid #ccc;
+            color: #1A2B0F;
+            font-family: 'Basic Choice 2', Arial, sans-serif;
+        }
+        
+        /* MODIFICAÇÃO AQUI: Fundo branco e fonte padronizada para inputs do resumo */
+        .resumo-item-input-group input {
+            background-color: white; /* Fundo branco solicitado */
+            border: 1px solid #ccc;
+            color: #1A2B0F;
+            font-family: 'Basic Choice 2', Arial, sans-serif; /* Fonte padronizada */
+        }
+
+        /* Cor do botão primário (Fazer Pedido/Continuar Comprando) */
+        button { 
+            padding: 10px; 
+            border-radius: 20px; 
+            background-color: #7FB1C8; 
+            border: none; 
+            color: #FFF; 
+            cursor: pointer; 
+            font-family: 'Basic Choice 2', Arial, sans-serif; 
+            width: 100%; 
+            font-size: 18px; 
+            margin-top: 10px; /* Ajustado para espaçamento consistente */
+            box-shadow: 0 4px #4c7e93; /* Sombra padrão azul */
+        }
+        button:active {
+            box-shadow: 0 2px #4c7e93;
+            transform: translateY(2px);
+        }
+
+        /* MODIFICAÇÃO: Adicionando margem inferior ao botão VOLTAR */
+        #botao-voltar { 
+            background-color: #7FB1C8; 
+            color: #FFF; 
+            font-size: 18px; 
+            border: none; 
+            padding: 12px; 
+            border-radius: 20px; 
+            cursor: pointer; 
+            width: 100%; 
+            margin-top: 20px; 
+            /* ADICIONADO ESPAÇAMENTO INFERIOR */
+            margin-bottom: 20px; 
+            font-family: 'Basic Choice 2', Arial, sans-serif; 
+        }
+
         .erro { color: red; font-size: 14px; margin-top: 10px; }
-        #resumo { display: none; margin-top: 20px; font-weight: bold; background-color: #F4E6CB; color: #1A2B0F; padding: 15px; border-radius: 10px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); }
-        #resumo h2 { font-size: 26px; font-weight: bold; }
-        .resumo-itens { text-align: left; padding-left: 20px; }
-        #resumo-total { text-align: right; font-size: 22px; font-weight: bold; }
-        footer { width: 100%; margin: 30px 0 0 0; padding: 0; }
-        footer img { width: 100%; height: auto; }
-        .popup { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); justify-content: center; align-items: center; }
-        .popup-conteudo { background-color: #F4E6CB; padding: 20px; border-radius: 10px; width: 80%; max-width: 400px; text-align: center; position: relative; }
-        .popup h2 { color: #000; }
-        .popup input, .popup select { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 20px; font-family: 'Basic Choice 2', Arial, sans-serif; box-sizing: border-box; }
-        .popup button { padding: 10px; background-color: #7FB1C8; color: #FFF; border: none; border-radius: 20px; cursor: pointer; width: 100%; font-size: 18px; }
-        .popup button:hover { background-color: #6f97b2; }
-        .fechar { color: #aaa; font-size: 28px; font-weight: bold; position: absolute; top: 10px; right: 10px; cursor: pointer; }
-        .popup label { color: #000; font-weight: bold; display: block; margin-top: 10px; }
+        
+        #resumo { display: none; } 
+        
+        /* Estilos do Popup Geral */
+        .popup { 
+            position: fixed; 
+            z-index: 100; 
+            left: 0; 
+            top: 0; 
+            width: 100%; 
+            height: 100%; 
+            background-color: rgba(0, 0, 0, 0.5); 
+            justify-content: center; 
+            align-items: center; 
+            display: none; 
+        }
+        
+        .popup-conteudo { 
+            background-color: #F4E6CB; 
+            padding: 20px; 
+            border-radius: 10px; 
+            width: 90%; 
+            max-width: 450px; 
+            text-align: center; 
+            position: relative; 
+            max-height: 80vh; 
+            overflow-y: auto; 
+        }
+        
+        /* ÍCONE DE FECHAR NO CANTO DIREITO (CORREÇÃO) */
+        .fechar { 
+            color: #aaa; 
+            font-size: 28px; 
+            font-weight: bold; 
+            position: absolute; 
+            top: 10px; 
+            right: 20px; 
+            cursor: pointer; 
+            z-index: 110;
+        }
+
+        /* Estilos específicos do conteúdo do Resumo */
+        .popup-conteudo h2 { color: #1A2B0F; font-size: 26px; font-weight: bold; }
+        .resumo-itens { text-align: left; padding-left: 0px; color: #1A2B0F; margin-bottom: 10px;}
+        
+        /* ESTILOS DE TOTAIS */
+        .resumo-total { 
+            text-align: right; 
+            font-size: 22px; 
+            font-weight: bold; 
+            color: #1A2B0F; 
+            margin-top: 10px;
+        }
+        .resumo-total-line {
+            font-size: 16px; /* Menor que o TOTAL FINAL */
+            font-weight: normal;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+        }
+        .resumo-total-line.total-com-desconto {
+            color: #E60000;
+        }
+        /* Separador visual */
+        #popup-resumo-total {
+             border-top: 1px dashed #7FB1C8; 
+             padding-top: 10px;
+             margin-top: 10px;
+        }
+
+
+        /* Estilo do preço original riscado */
+        .price-original-item {
+            text-decoration: line-through;
+            color: #888;
+            font-weight: normal;
+            margin-right: 5px;
+        }
+        
+        /* Estilo do preço final com desconto */
+        .price-final-item {
+             color: #E60000; /* Vermelho para destaque de desconto */
+        }
+
+        /* Estilo para cada item do resumo (linha do produto) */
+        .resumo-item-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: center; /* Alinha tudo verticalmente */
+            border-bottom: 1px dashed #7FB1C8; 
+            padding: 8px 0;
+            font-size: 14px;
+        }
+        
+        /* Contém o nome do item e o preço total (do item) */
+        .resumo-item-name {
+            flex-grow: 1;
+            text-align: left;
+            margin-right: 10px;
+        }
+        
+        /* Estilo do preço no nome do item */
+        .resumo-item-name small {
+            display: block;
+            font-weight: normal;
+            color: #1A2B0F;
+        }
+        .resumo-item-name .price-final-item {
+             color: #1A2B0F; /* O preço com desconto permanece preto aqui */
+             font-weight: bold;
+        }
+
+        /* Grupo de edição e exclusão no pop-up */
+        .resumo-item-input-group {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+            gap: 5px; /* ESPAÇAMENTO REDUZIDO ENTRE UNIDADE E INPUT */
+        }
+
+        /* Estilo para o campo de input na edição direta (como na imagem) */
+        .resumo-item-input-group input {
+            width: 55px; 
+            height: 35px; 
+            padding: 5px;
+            font-size: 14px;
+            text-align: center;
+            border-radius: 10px;
+            box-sizing: border-box;
+            margin: 0; /* CORREÇÃO: Aproxima o input do UN. */
+            
+            -moz-appearance: textfield; 
+        }
+        
+        /* Botão de excluir (Excluir) - PADRONIZADO COM APLICAR */
+        .btn-excluir {
+            background-color: #E60000; 
+            color: white;
+            width: 70px; 
+            font-size: 12px; 
+            padding: 10px 0; /* AUMENTADO para igualar a altura do botão APLICAR */
+            margin: 0 0 0 10px; /* MAIOR ESPAÇAMENTO com UNIDADE */
+            border-radius: 10px; 
+            box-shadow: none;
+            flex-shrink: 0;
+            line-height: 1; /* Centraliza o texto verticalmente */
+            height: 40px; /* Garante a altura */
+        }
+        
+        /* ----------------- CUPOM STYLES ----------------- */
+        #cupom-container {
+            background-color: #e8dcc6; 
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            text-align: left;
+            color: #1A2B0F;
+        }
+
+        #cupom-input-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            align-items: center;
+        }
+
+        #cupom-input {
+            flex-grow: 1;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid #7FB1C8;
+            background-color: white;
+            color: #1A2B0F;
+            box-sizing: border-box;
+            height: 40px; /* Ajuste para alinhar com o botão APLICAR */
+        }
+
+        #apply-cupom-btn {
+            width: 70px; 
+            flex-shrink: 0;
+            padding: 10px 0; 
+            margin: 0;
+            font-size: 14px;
+            background-color: #E09F41; /* Laranja para destaque */
+            border-radius: 10px; 
+            height: 40px; /* Garante a altura para alinhar com o input */
+        }
+
+        .cupom-message {
+            margin-top: 10px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .cupom-error {
+            color: red;
+        }
+
+        .cupom-success {
+            color: green;
+        }
+
+        /* ---------------------------------------------------------------------- */
+        /* ESTILOS DO POPUP DE INFORMAÇÕES DO PEDIDO (Novo Estilo) */
+        /* ---------------------------------------------------------------------- */
+        #form-pedido {
+            display: flex;
+            flex-direction: column; /* Coloca os filhos em coluna */
+            gap: 15px; /* Espaçamento entre os campos */
+            text-align: left;
+            color: #1A2B0F; /* Cor do texto do rótulo */
+        }
+
+        #form-pedido label {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: -5px; /* Ajuste para aproximar do campo */
+        }
+
+        /* Estilo para todos os inputs e selects dentro do formulário */
+        #form-pedido input[type="text"],
+        #form-pedido input[type="date"],
+        #form-pedido input[type="time"],
+        #form-pedido select {
+            /* Cor de fundo branca, conforme solicitação (como o campo de cupom) */
+            background-color: white; 
+            color: #1A2B0F;
+            border: 1px solid #7FB1C8; /* Borda azul padrão do site */
+            padding: 10px;
+            border-radius: 10px;
+            font-family: 'Basic Choice 2', Arial, sans-serif;
+            font-size: 16px;
+            width: 100%; /* Ocupa a largura total para quebrar a linha */
+            box-sizing: border-box;
+            text-align: left; /* Alinhamento do texto */
+        }
+        
+        /* Ajuste do input de nome para alinhamento esquerdo */
+        #form-pedido input[type="text"] {
+            text-align: left;
+        }
+
+        /* PADRONIZAÇÃO dos botões (CONFIRMAR/EDITAR/CONTINUAR COMPRANDO) com o botão azul principal */
+        #form-pedido button {
+            background-color: #7FB1C8; /* Cor azul do "CONTINUAR COMPRANDO" */
+            box-shadow: 0 4px #4c7e93; /* Sombra do "CONTINUAR COMPRANDO" */
+            margin-top: 15px; /* Espaçamento padrão */
+        }
+
+        /* O botão "CONTINUAR COMPRANDO" (era Cancelar) mantém o estilo do botão azul */
+        #form-pedido button:nth-of-type(2) { 
+            background-color: #7FB1C8;
+            box-shadow: 0 4px #4c7e93;
+        }
+        /* ---------------------------------------------------------------------- */
+
 
         /* Media Queries (Mantidos) */
         @media (min-width: 768px) {
@@ -337,77 +626,20 @@
         </header>
 
         <div id="sticky-nav-container">
-            <div id="search-bar-container">
-                <input type="text" id="search-input" placeholder="Buscar item ou grupo" autocomplete="off">
-                <div id="search-results" style="display: none;"></div> 
-            </div>
-
             <div id="categorias-horizontal">
-                <a href="#grupo-salfri" data-target="tabela-salfri">Salgados Fritos</a>
-                <a href="#grupo-salgado-forno" data-target="tabela-salgado-forno">Salgados Forno</a>
-                <a href="#grupo-salgado-vegetariano" data-target="tabela-salgado-vegetariano">Salgados Veg</a>
-                <a href="#grupo-prato-salgado" data-target="tabela-prato-salgado">Pratos Salgados</a>
-                <a href="#grupo-bolo-tradicional" data-target="tabela-bolo-tradicional">Bolos Trad.</a>
-                <a href="#grupo-bolo-especial" data-target="tabela-bolo-especial">Bolos Espec.</a>
-                <a href="#grupo-doces" data-target="tabela-doces">Doces</a>
-                <a href="#grupo-cookies" data-target="tabela-cookies">Cookies</a>
+                <a href="#grupo-bolo-tradicional" data-target="grupo-bolo-tradicional" data-img="img-bolo-tradicional">Bolos Tradicionais</a>
+                <a href="#grupo-bolo-especial" data-target="grupo-bolo-especial" data-img="img-bolo-especial">Bolos Espececiais</a>
+                <a href="#grupo-doces" data-target="grupo-doces" data-img="img-doces">Doces</a>
+                <a href="#grupo-cookies" data-target="grupo-cookies" data-img="img-cookies">Cookies</a>
+                <a href="#grupo-salfri" data-target="grupo-salfri" data-img="img-salfri">Salgados Fritos</a>
+                <a href="#grupo-salgado-forno" data-target="grupo-salgado-forno" data-img="img-salgado-forno">Salgados Forno</a>
+                <a href="#grupo-salgado-vegetariano" data-target="grupo-salgado-vegetariano" data-img="img-salgado-vegetariano">Salgados Vegetarianos</a>
+                <a href="#grupo-prato-salgado" data-target="grupo-prato-salgado" data-img="img-prato-salgado">Pratos Salgados</a>
             </div>
         </div>
         
-        <div class="categoria-group" id="grupo-salfri">
-            <img src="salfri.png" alt="Salgados Fritos"> <table id="tabela-salfri">
-                <caption>Salgados Fritos</caption>
-                <tr>
-                    <th>ITEM</th>
-                    <th>QNT. MÍN.</th>
-                    <th>UNID.</th>
-                    <th>QUANTIDADE</th>
-                </tr>
-                <tbody></tbody>
-            </table>
-        </div>
-
-        <div class="categoria-group" id="grupo-salgado-forno">
-            <img src="SALFOR.png" alt="Salgados Forno"> <table id="tabela-salgado-forno">
-                <caption>Salgados Forno</caption>
-                <tr>
-                    <th>ITEM</th>
-                    <th>QNT. MÍN.</th>
-                    <th>UNID.</th>
-                    <th>QUANTIDADE</th>
-                </tr>
-                <tbody></tbody>
-            </table>
-        </div>
-
-        <div class="categoria-group" id="grupo-salgado-vegetariano">
-            <img src="SALVEG.png" alt="Salgados Vegetarianos"> <table id="tabela-salgado-vegetariano">
-                <caption>Salgados Vegetarianos</caption>
-                <tr>
-                    <th>ITEM</th>
-                    <th>QNT. MÍN.</th>
-                    <th>UNID.</th>
-                    <th>QUANTIDADE</th>
-                </tr>
-                <tbody></tbody>
-            </table>
-        </div>
-        
-        <div class="categoria-group" id="grupo-prato-salgado">
-            <img src="PRASAL.png" alt="Pratos Salgados"> <table id="tabela-prato-salgado">
-                <caption>Pratos Salgados</caption>
-                <tr>
-                    <th>ITEM</th>
-                    <th>tamanho</th>
-                    <th>UNID.</th>
-                    <th>QUANTIDADE</th>
-                </tr>
-                <tbody></tbody>
-            </table>
-        </div>
-
-        <div class="categoria-group" id="grupo-bolo-tradicional">
-            <img src="BOLTRA.png" alt="Bolos Tradicionais"> <table id="tabela-bolo-tradicional">
+        <div class="categoria-group active-group" id="grupo-bolo-tradicional">
+            <img src="BOLTRA.png" alt="Bolos Tradicionais" id="img-bolo-tradicional"> <table id="tabela-bolo-tradicional">
                 <caption>Bolos Tradicionais</caption>
                 <tr>
                     <th>ITEM</th>
@@ -420,7 +652,7 @@
         </div>
 
         <div class="categoria-group" id="grupo-bolo-especial">
-            <img src="BOLESP.png" alt="Bolos Especiais"> <table id="tabela-bolo-especial">
+            <img src="BOLESP.png" alt="Bolos Especiais" id="img-bolo-especial"> <table id="tabela-bolo-especial">
                 <caption>Bolos Especiais</caption>
                 <tr>
                     <th>ITEM</th>
@@ -433,7 +665,7 @@
         </div>
 
         <div class="categoria-group" id="grupo-doces">
-            <img src="DOCS.png" alt="Doces"> <table id="tabela-doces">
+            <img src="DOCS.png" alt="Doces" id="img-doces"> <table id="tabela-doces">
                 <caption>Doces</caption>
                 <tr>
                     <th>ITEM</th>
@@ -446,7 +678,7 @@
         </div>
 
         <div class="categoria-group" id="grupo-cookies">
-            <img src="cookies.png" alt="Cookies"> <table id="tabela-cookies">
+            <img src="cookies.png" alt="Cookies" id="img-cookies"> <table id="tabela-cookies">
                 <caption>Cookies</caption>
                 <tr>
                     <th>ITEM</th>
@@ -457,39 +689,115 @@
                 <tbody></tbody>
             </table>
         </div>
+
+        <div class="categoria-group" id="grupo-salfri">
+            <img src="salfri.png" alt="Salgados Fritos" id="img-salfri"> <table id="tabela-salfri">
+                <caption>Salgados Fritos</caption>
+                <tr>
+                    <th>ITEM</th>
+                    <th>QNT. MÍN.</th>
+                    <th>UNID.</th>
+                    <th>QUANTIDADE</th>
+                </tr>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div class="categoria-group" id="grupo-salgado-forno">
+            <img src="SALFOR.png" alt="Salgados Forno" id="img-salgado-forno"> <table id="tabela-salgado-forno">
+                <caption>Salgados Forno</caption>
+                <tr>
+                    <th>ITEM</th>
+                    <th>QNT. MÍN.</th>
+                    <th>UNID.</th>
+                    <th>QUANTIDADE</th>
+                </tr>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div class="categoria-group" id="grupo-salgado-vegetariano">
+            <img src="SALVEG.png" alt="Salgados Vegetarianos" id="img-salgado-vegetariano"> <table id="tabela-salgado-vegetariano">
+                <caption>Salgados Vegetarianos</caption>
+                <tr>
+                    <th>ITEM</th>
+                    <th>QNT. MÍN.</th>
+                    <th>UNID.</th>
+                    <th>QUANTIDADE</th>
+                </tr>
+                <tbody></tbody>
+            </table>
+        </div>
         
-        <div id="resumo">
+        <div class="categoria-group" id="grupo-prato-salgado">
+            <img src="PRASAL.png" alt="Pratos Salgados" id="img-prato-salgado"> <table id="tabela-prato-salgado">
+                <caption>Pratos Salgados</caption>
+                <tr>
+                    <th>ITEM</th>
+                    <th>tamanho</th>
+                    <th>UNID.</th>
+                    <th>QUANTIDADE</th>
+                </tr>
+                <tbody></tbody>
+            </table>
+        </div>
+        
+        
+        <div id="resumo" style="display:none;"> 
             <h2>Resumo do Pedido</h2>
             <div id="resumo-itens" class="resumo-itens"></div>
             <div id="resumo-total"></div>
-            <button onclick="abrirPopup()">Fazer Pedido</button>
         </div>
         
         <button id="botao-voltar" onclick="window.location.replace('https://favucozinha.github.io/Inicio/')">Voltar</button>
         
+        <div id="popup-resumo" class="popup">
+            <div class="popup-conteudo">
+                <span class="fechar" onclick="fecharResumoPopup()">&times;</span>
+                <h2>SEU PEDIDO</h2>
+                
+                <div id="popup-resumo-itens" class="resumo-itens"></div>
+                
+                <div id="cupom-container">
+                    <strong>CUPOM DE DESCONTO</strong>
+                    <div id="cupom-input-group">
+                        <input type="text" id="cupom-input" placeholder="CÓDIGO">
+                        <button id="apply-cupom-btn" onclick="aplicarCupom()">APLICAR</button>
+                    </div>
+                    <div id="cupom-message" class="cupom-message"></div>
+                </div>
+                <div id="popup-resumo-total" class="resumo-total"></div>
+                
+                <div id="fazer-pedido-button-container">
+                    </div>
+                <button onclick="fecharResumoPopup()">CONTINUAR COMPRANDO</button>
+            </div>
+        </div>
+        
         <div id="popup-pedido" class="popup">
             <div class="popup-conteudo">
                 <span class="fechar" onclick="fecharPopup()">&times;</span>
-                <h2>Informações do Pedido</h2>
+                <h2>INFORMAÇÕES DO PEDIDO</h2>
                 <form id="form-pedido">
-                    <label for="nome">Nome:</label>
-                    <input type="text" id="nome" name="nome" required>
+                    <label for="nome">NOME:</label>
+                    <input type="text" id="nome" name="nome" placeholder="Seu Nome Completo" required>
 
-                    <label for="data">Data da Entrega:</label>
+                    <label for="data">DATA DA ENTREGA:</label>
                     <input type="date" id="data" name="data" required>
 
-                    <label for="horario">Horário da Entrega:</label>
+                    <label for="horario">HORÁRIO DA ENTREGA:</label>
                     <input type="time" id="horario" name="horario" required>
-                
-                    <label for="pagamento">Forma de Pagamento:</label>
+                    
+                    <label for="pagamento">FORMA DE PAGAMENTO:</label>
                     <select id="pagamento" name="pagamento" required>
                         <option value="Dinheiro">Dinheiro</option>
                         <option value="Cartão">Cartão</option>
                         <option value="Pix">Pix</option>
                     </select>
 
-                    <button type="button" onclick="confirmarPedido()">Confirmar Pedido</button>
-                    <button type="button" onclick="fecharPopup()">Cancelar</button>
+                    <button type="button" onclick="confirmarPedido()">CONFIRMAR PEDIDO</button>
+                    <button type="button" onclick="fecharPopup()">CONTINUAR COMPRANDO</button> 
+                    <button type="button" onclick="editarPedido()">EDITAR PEDIDO</button>
                 </form>
             </div>
         </div>
@@ -501,7 +809,7 @@
                     <span>Total sem a entrega</span>
                     <span id="summary-item-count"> / 0 itens</span>
                 </div>
-                <button id="summary-button" onclick="scrollToElement(document.getElementById('resumo'))">Ver Pedido</button>
+                <button id="summary-button" onclick="abrirResumoPopup()">Ver Pedido</button>
             </div>
         </div>
 
@@ -511,10 +819,12 @@
     </div>
 
     <script>
-        // -----------------------------------------------------
-        // DADOS DOS PRODUTOS
-        // -----------------------------------------------------
+        // Variável global para armazenar o cupom aplicado
+        let cupomAplicado = { codigo: null, desconto: 0, mensagem: '' };
         
+        // -----------------------------------------------------
+        // DADOS DOS PRODUTOS - MANTIDOS
+        // -----------------------------------------------------
         const generateId = (nome, tamanho) => {
             let base = nome.toLowerCase().replace(/[^a-z0-9]/g, '-');
             if (tamanho) {
@@ -547,7 +857,7 @@
             { nome: "Bolo de Maracujá", tamanho: "M (2.5 KG)", preco: 150.00, descricaoResumo: "Bolo de Maracujá e Chocolate Branco - M (2.5 KG)", descricao: "Com Cholocate Branco"},
             { nome: "Bolo de Maracujá", tamanho: "G (3.5 KG)", preco: 210.00, descricaoResumo: "Bolo de Maracujá e Chocolate Branco - G (3.5 KG)", descricao: "Com Cholocate Branco"},
         ]).map(item => ({...item, id: generateId(item.nome, item.tamanho)}));
-    
+        
         const itensBoloEspecial = addGroupKeys([
             { nome: "Bolo de Ameixa", tamanho: "P (1.5 KG)", preco: 105.00, descricaoResumo: "Bolo de Ameixa e Chocolate Branco - P (1.5 KG)", descricao: "Com Chocolate Branco"},
             { nome: "Bolo de Ameixa", tamanho: "M (2.5 KG)", preco: 175.00, descricaoResumo: "Bolo de Ameixa e Chocolate Branco - M (2.5 KG)", descricao: "Com Chocolate Branco"},
@@ -616,7 +926,7 @@
             { nome: "Pastel de Forno de Queijo", min: 25, preco: 0.90, descricaoResumo: "Pastel de Forno de Queijo", descricao: "" },
             { nome: "Pastel de Forno de Pizza", min: 25, preco: 0.90, descricaoResumo: "Pastel de Forno de Pizza", descricao: "" },
         ]).map(item => ({...item, id: generateId(item.nome)}));
-    
+        
         const itensSalgadoVegetariano = addGroupKeys([
             { nome: "Canudinho de Soja", min: 25, preco: 1.50, descricaoResumo: "Canudinho de Soja", descricao: "Massa Caseira Assada no Forno" },
             { nome: "Coxinha de Soja", min: 25, preco: 0.90, descricaoResumo: "Coxinha de SOJA", descricao: "" },
@@ -659,7 +969,7 @@
             { nome: "Rocambole de Carne", tamanho: "P (1 KG)", preco: 65.00, descricaoResumo: "Rocambole de Carne - P (1 KG)", descricao: "Massa de Batata"},
             { nome: "Rocambole de Carne", tamanho: "M (2 KG)", preco: 130.00, descricaoResumo: "Rocambole de Carne - M (2 KG)", descricao: "Massa de Batata"},
             { nome: "Rocambole de Carne", tamanho: "G (3 KG)", preco: 195.00, descricaoResumo: "Rocambole de Carne - G (3 KG)", descricao: "Massa de Batata"},
-            { nome: "Rocambole de Frango", tamanho: "P (1 KG)", preco: 65.00, descricaoResumo: "Rocambole de Frango - P (1 KG)", descricao: "Massa de Batata"},
+            { nome: "Rocambole de Frango", tamanho: "P (1 KG)", preco: 65.00, descricaoResumo: "Rocambole de Frango - P (1.5 KG)", descricao: "Massa de Batata"},
             { nome: "Rocambole de Frango", tamanho: "M (2 KG)", preco: 130.00, descricaoResumo: "Rocambole de Frango - M (2 KG)", descricao: "Massa de Batata"},
             { nome: "Rocambole de Frango", tamanho: "G (3 KG)", preco: 195.00, descricaoResumo: "Rocambole de Frango - G (3 KG)", descricao: "Massa de Batata"},
             { nome: "Torta Salgada de Bacalhau", tamanho: "P (1 KG)", preco: 95.00, descricaoResumo: "Torta Salgada de Bacalhau - P (1 KG)", descricao: ""},
@@ -677,19 +987,17 @@
         ]).map(item => ({...item, id: generateId(item.nome, item.tamanho)}));
 
         
-        // Mapeamento de todos os grupos
         const gruposItens = {
-            "tabela-bolo-tradicional": { itens: itensBoloTradicional, nomeGrupo: "Bolos Tradicionais", img: "BOLTRA.png" },
-            "tabela-bolo-especial": { itens: itensBoloEspecial, nomeGrupo: "Bolos Especiais", img: "BOLESP.png" },
-            "tabela-doces": { itens: itensDoces, nomeGrupo: "Doces", img: "DOCS.png" },
-            "tabela-cookies": { itens: itensCookies, nomeGrupo: "Cookies", img: "cookies.png" }, 
-            "tabela-salfri": { itens: itensSalgadoFrito, nomeGrupo: "Salgados Fritos", img: "salfri.png" },
-            "tabela-salgado-forno": { itens: itensSalgadoForno, nomeGrupo: "Salgados Assados", img: "SALFOR.png" },
-            "tabela-salgado-vegetariano": { itens: itensSalgadoVegetariano, nomeGrupo: "Salgados Vegetarianos", img: "SALVEG.png" },
-            "tabela-prato-salgado": { itens: itensPratoSalgado, nomeGrupo: "Pratos Salgados", img: "PRASAL.png" },
+            "tabela-bolo-tradicional": { itens: itensBoloTradicional, nomeGrupo: "Bolos Tradicionais", img: "img-bolo-tradicional" },
+            "tabela-bolo-especial": { itens: itensBoloEspecial, nomeGrupo: "Bolos Especiais", img: "img-bolo-especial" },
+            "tabela-doces": { itens: itensDoces, nomeGrupo: "Doces", img: "img-doces" },
+            "tabela-cookies": { itens: itensCookies, nomeGrupo: "Cookies", img: "img-cookies" }, 
+            "tabela-salfri": { itens: itensSalgadoFrito, nomeGrupo: "Salgados Fritos", img: "img-salfri" },
+            "tabela-salgado-forno": { itens: itensSalgadoForno, nomeGrupo: "Salgados Assados", img: "img-salgado-forno" },
+            "tabela-salgado-vegetariano": { itens: itensSalgadoVegetariano, nomeGrupo: "Salgados Vegetarianos", img: "img-salgado-vegetariano" },
+            "tabela-prato-salgado": { itens: itensPratoSalgado, nomeGrupo: "Pratos Salgados", img: "img-prato-salgado" },
         };
         
-        // Array com TODOS os itens para a busca
         let todosOsItens = [];
         for (const idTabela in gruposItens) {
             gruposItens[idTabela].itens.forEach(item => {
@@ -702,7 +1010,7 @@
         }
         
         // -----------------------------------------------------
-        // FUNÇÃO DE CRIAÇÃO DE TABELAS
+        // FUNÇÃO DE CRIAÇÃO DE TABELAS - MANTIDA
         // -----------------------------------------------------
         function criarTabelaGrupo(grupo, idTabela, nomeGrupo) {
             const tbody = document.getElementById(idTabela).querySelector('tbody');
@@ -720,6 +1028,8 @@
                 const precoFormatado = item.preco.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                 const itemId = item.id;
                 
+                tr.id = itemId; 
+                
                 let isFirstInGroup = false;
                 
                 if (isGroupedTable) {
@@ -735,23 +1045,24 @@
                     }
                     
                     if (item.groupKey === grupoAtual && i < grupo.length - 1 && grupo[i+1].groupKey === grupoAtual) {
-                         tr.classList.add('item-group-active');
+                           tr.classList.add('item-group-active');
                     }
                 }
                 
-                
-                // INJEÇÃO DO HTML DA LINHA
+                // Usamos value="" para que o campo inicial fique vazio
+                const inputHtml = `<input type="number" value="" data-min="${item.min || 1}" data-preco="${item.preco}" data-resumo="${item.descricaoResumo}" data-grupo="${nomeGrupo}" data-item-id="${itemId}" class="quantidade-input">`;
+
                 if (isGroupedTable && isFirstInGroup) {
                     tr.innerHTML = `
                         <td rowspan="${countGrupo}" class="item-group-cell">
                             <div class="item-nome">${item.nome}</div>
                             ${item.descricao ? `<div class="descricao">${item.descricao}</div>` : ''}
                         </td>
-                        <td id="item-${itemId}">${coluna2}</td>
+                        <td>${coluna2}</td>
                         <td>R$ ${precoFormatado}</td>
                         <td>
                             <div class="quantidade-container">
-                                <input type="number" min="0" value="0" data-min="${item.min || 1}" data-preco="${item.preco}" data-resumo="${item.descricaoResumo}" data-grupo="${nomeGrupo}" data-item-id="${itemId}" class="quantidade-input">
+                                ${inputHtml}
                                 <div class="erro" style="color: red; display: none; font-size: 0.9em; margin-top: 5px;">
                                     Mín. ${item.min || 1} un.
                                 </div>
@@ -760,11 +1071,11 @@
                     `;
                 } else if (isGroupedTable && !isFirstInGroup) {
                     tr.innerHTML = `
-                        <td id="item-${itemId}">${coluna2}</td>
+                        <td>${coluna2}</td>
                         <td>R$ ${precoFormatado}</td>
                         <td>
                             <div class="quantidade-container">
-                                <input type="number" min="0" value="0" data-min="${item.min || 1}" data-preco="${item.preco}" data-resumo="${item.descricaoResumo}" data-grupo="${nomeGrupo}" data-item-id="${itemId}" class="quantidade-input">
+                                ${inputHtml}
                                 <div class="erro" style="color: red; display: none; font-size: 0.9em; margin-top: 5px;">
                                     Mín. ${item.min || 1} un.
                                 </div>
@@ -773,21 +1084,21 @@
                     `;
                 } else {
                      tr.innerHTML = `
-                         <td>
-                            <div class="item-nome" id="item-${itemId}">${item.nome}</div>
-                            ${item.descricao ? `<div class="descricao">${item.descricao}</div>` : ''}
-                        </td>
-                        <td>${coluna2}</td>
-                        <td>R$ ${precoFormatado}</td>
-                        <td>
-                            <div class="quantidade-container">
-                                <input type="number" min="0" value="0" data-min="${item.min || 1}" data-preco="${item.preco}" data-resumo="${item.descricaoResumo}" data-grupo="${nomeGrupo}" data-item-id="${itemId}" class="quantidade-input">
-                                <div class="erro" style="color: red; display: none; font-size: 0.9em; margin-top: 5px;">
-                                    Mín. ${item.min || 1} un.
-                                </div>
-                            </div>
-                        </td>
-                     `;
+                          <td>
+                              <div class="item-nome">${item.nome}</div>
+                              ${item.descricao ? `<div class="descricao">${item.descricao}</div>` : ''}
+                          </td>
+                          <td>${coluna2}</td>
+                          <td>R$ ${precoFormatado}</td>
+                          <td>
+                              <div class="quantidade-container">
+                                  ${inputHtml}
+                                  <div class="erro" style="color: red; display: none; font-size: 0.9em; margin-top: 5px;">
+                                      Mín. ${item.min || 1} un.
+                                  </div>
+                              </div>
+                          </td>
+                      `;
                 }
                 
                 tbody.appendChild(tr);
@@ -795,16 +1106,229 @@
         }
         
         // -----------------------------------------------------
-        // FUNÇÃO DE ATUALIZAÇÃO DO TOTAL (E DO RODAPÉ FIXO)
+        // LÓGICA DE FILTRO E ABA - MANTIDA
+        // -----------------------------------------------------
+        function ativarAba(linkElement) {
+            const targetGroupId = linkElement.getAttribute('data-target');
+            const targetGroup = document.getElementById(targetGroupId);
+            const categoriasBar = document.getElementById('categorias-horizontal');
+
+            if (!targetGroup) return;
+
+            categoriasBar.querySelectorAll('a').forEach(link => {
+                link.classList.remove('active-link');
+            });
+            document.querySelectorAll('.categoria-group').forEach(group => {
+                group.classList.remove('active-group');
+            });
+
+            linkElement.classList.add('active-link');
+            targetGroup.classList.add('active-group');
+            
+            linkElement.scrollIntoView({ behavior: 'smooth', inline: 'center' }); 
+        }
+
+        /**
+         * Rola a página para um elemento específico, considerando a barra sticky.
+         * @param {HTMLElement} targetElement O elemento alvo (ex: a imagem ou o TR).
+         */
+        function scrollToElement(targetElement) {
+            if (!targetElement) return;
+
+            // Remove o destaque de qualquer linha antes de rolar
+            document.querySelectorAll('.highlight-edit').forEach(el => {
+                el.classList.remove('highlight-edit');
+            });
+
+            const mainHeader = document.querySelector('header');
+            const stickyNav = document.getElementById('sticky-nav-container');
+            
+            // Calcula a altura fixa total (header + sticky nav)
+            const fixedHeight = (mainHeader ? mainHeader.offsetHeight : 0) + (stickyNav ? stickyNav.offsetHeight : 0) + 10;
+            
+            const elementPosition = targetElement.getBoundingClientRect().top + window.scrollY;
+            const offsetPosition = elementPosition - fixedHeight;
+
+            window.scrollTo({
+                top: Math.max(0, offsetPosition), // Garante que não role para cima demais
+                behavior: 'smooth'
+            });
+        }
+        
+        // -----------------------------------------------------
+        // LÓGICA DE CUPOM (AJUSTADA: Remove a exibição do R$ 8,00 na mensagem)
+        // -----------------------------------------------------
+        
+        const CUPOM_FAVUCOOKIE = 'FAVUCOOKIE';
+        
+        function limparCupom() {
+            cupomAplicado = { codigo: null, desconto: 0, mensagem: '' };
+            const cupomInput = document.getElementById('cupom-input');
+            if (cupomInput) cupomInput.value = '';
+        }
+
+        function aplicarCupom() {
+            const cupomInput = document.getElementById('cupom-input');
+            const cupomCode = cupomInput.value.toUpperCase().trim();
+            const cupomMessage = document.getElementById('cupom-message');
+            
+            cupomAplicado = { codigo: null, desconto: 0, mensagem: '' };
+            cupomMessage.className = 'cupom-message'; // Reset classes
+            
+            // 1. Coleta e valida a quantidade de cookies
+            let totalCookies = 0;
+            const cookiesGrupos = ["Cookies"]; 
+            let hasCookieItem = false;
+            
+            document.querySelectorAll(".quantidade-input").forEach(input => {
+                const grupo = input.getAttribute("data-grupo");
+                const quantidade = parseInt(input.value) || 0;
+
+                if (cookiesGrupos.includes(grupo)) {
+                    totalCookies += quantidade;
+                    if (quantidade > 0) {
+                        hasCookieItem = true;
+                    }
+                }
+            });
+
+            // 2. Validação do Cupom FAVUCOOKIE
+            if (cupomCode === CUPOM_FAVUCOOKIE) {
+                
+                // 2.1. Validação de Item (Se tem algum cookie no pedido)
+                if (!hasCookieItem) {
+                    cupomAplicado.mensagem = 'Cupom válido apenas para Cookies.';
+                    cupomMessage.classList.add('cupom-error');
+                    atualizarTotal();
+                    return;
+                }
+                
+                // 2.2. Validação de Data: USA A DATA ATUAL
+                const dataAtual = new Date();
+                const diaDaSemana = dataAtual.getDay(); // 0 = Domingo, 1 = Segunda, ..., 6 = Sábado
+
+                // Válido de Segunda (1) a Quinta (4)
+                if (diaDaSemana === 0 || diaDaSemana === 5 || diaDaSemana === 6) { // Domingo, Sexta, Sábado
+                    cupomAplicado.mensagem = 'Cupom válido apenas para pedidos realizados entre Segunda e Quinta-feira.';
+                    cupomMessage.classList.add('cupom-error');
+                    atualizarTotal();
+                    return;
+                }
+
+                // 2.3. Validação de Quantidade (MENSAGEM CORRIGIDA)
+                const minCookies = 4;
+                if (totalCookies < minCookies) {
+                    cupomAplicado.mensagem = `CUPOM VÁLIDO APENAS PARA NO MÍNIMO ${minCookies} COOKIES.`;
+                    cupomMessage.classList.add('cupom-error');
+                    atualizarTotal();
+                    return;
+                }
+                
+                // 3. Aplicação do Desconto
+                const descontoPorCookie = 2.00;
+                const descontoTotal = totalCookies * descontoPorCookie;
+                
+                cupomAplicado = {
+                    codigo: cupomCode,
+                    desconto: descontoTotal,
+                    // Mensagem ajustada para não exibir o valor fixo de R$ 8,00
+                    mensagem: `CUPOM ${cupomCode} APLICADO!` 
+                };
+                cupomMessage.classList.add('cupom-success');
+                
+            } else if (cupomCode) {
+                cupomAplicado.mensagem = `Código "${cupomCode}" inválido.`;
+                cupomMessage.classList.add('cupom-error');
+            }
+            
+            cupomMessage.textContent = cupomAplicado.mensagem;
+            atualizarTotal();
+        }
+        
+        // -----------------------------------------------------
+        // FUNÇÕES DE EDIÇÃO E EXCLUSÃO - AJUSTADA (digitação livre)
+        // -----------------------------------------------------
+        
+        /**
+         * Zera a quantidade de um item e atualiza o resumo.
+         * @param {string} itemId O ID exclusivo do item a ser excluído.
+         */
+        function excluirItem(itemId) {
+            const inputNoMain = document.querySelector(`.quantidade-input[data-item-id="${itemId}"]`);
+            if (inputNoMain) {
+                inputNoMain.value = ""; // Define como vazio para limpar visualmente
+                atualizarTotal(); 
+            }
+            // Revalida o cupom após a exclusão
+            if (cupomAplicado.codigo) aplicarCupom();
+            
+            // Força a reabertura do popup para refletir a exclusão (pois ele seria fechado se o total fosse zero)
+            if (parseFloat(document.getElementById("summary-total").textContent.replace('R$ ', '').replace('.', '').replace(',', '.')) > 0) {
+                 abrirResumoPopup();
+            } else {
+                 fecharResumoPopup();
+            }
+        }
+        
+        /**
+         * Atualiza o campo de quantidade principal e aciona a recontagem total.
+         * @param {HTMLElement} inputElement O campo input no pop-up de resumo.
+         */
+        function atualizarQuantidadeDireta(inputElement) {
+            const itemId = inputElement.getAttribute('data-item-id');
+            // Remove qualquer caractere não numérico
+            const valorInput = inputElement.value.replace(/[^0-9]/g, ''); 
+            let novaQuantidade = parseInt(valorInput) || 0;
+
+            const inputNoMain = document.querySelector(`.quantidade-input[data-item-id="${itemId}"]`);
+            const min = parseInt(inputNoMain.getAttribute('data-min')) || 1;
+
+            if (inputNoMain) {
+                
+                if (novaQuantidade > 0 && novaQuantidade < min) {
+                    // Se a quantidade é positiva, mas menor que o mínimo, força o mínimo
+                    novaQuantidade = min;
+                    inputElement.value = min;
+                } else if (novaQuantidade <= 0) {
+                    // Se for zero ou negativo, limpa o campo (o valor vazio no input principal representa 0)
+                    novaQuantidade = ""; 
+                    inputElement.value = ""; 
+                } else {
+                    // Atualiza o input do resumo com o valor numérico tratado
+                    inputElement.value = novaQuantidade; 
+                }
+
+                // 2. Atualiza o valor no campo principal da tabela
+                inputNoMain.value = novaQuantidade;
+                
+                // 3. Dispara a atualização total (que recria o pop-up)
+                atualizarTotal();
+                
+                // 4. Se o cupom estava ativo, revalida
+                if (cupomAplicado.codigo) aplicarCupom();
+
+                // 5. Reabrimos o popup para garantir que a lista esteja consistente e os totais atualizados.
+                if (parseFloat(document.getElementById("summary-total").textContent.replace('R$ ', '').replace('.', '').replace(',', '.')) > 0) {
+                    abrirResumoPopup(); 
+                } else {
+                    fecharResumoPopup();
+                }
+            }
+        }
+        
+        // -----------------------------------------------------
+        // FUNÇÃO DE ATUALIZAÇÃO DO TOTAL - MANTIDA
         // -----------------------------------------------------
         function atualizarTotal() {
-            let total = 0;
+            let totalBruto = 0;
             let totalItens = 0;
-            const resumoItens = document.getElementById("resumo-itens");
+            const resumoItensPopup = document.getElementById("popup-resumo-itens");
+            const resumoTotalPopup = document.getElementById("popup-resumo-total");
             const fixedSummary = document.getElementById("fixed-summary");
+            const fazerPedidoContainer = document.getElementById("fazer-pedido-button-container");
             
-            if (!resumoItens || !fixedSummary) return;
-            resumoItens.innerHTML = '';
+            if (!resumoItensPopup || !fixedSummary || !fazerPedidoContainer) return;
+            resumoItensPopup.innerHTML = ''; 
 
             const gruposResumo = {}; 
 
@@ -814,6 +1338,7 @@
                 const preco = parseFloat(input.getAttribute("data-preco")) || 0;
                 const descricaoResumo = input.getAttribute("data-resumo");
                 const grupo = input.getAttribute("data-grupo");
+                const itemId = input.getAttribute("data-item-id");
                 const erroElemento = input.closest('.quantidade-container').querySelector('.erro');
 
                 if (quantidade > 0 && quantidade < min) {
@@ -824,57 +1349,172 @@
 
                 if (quantidade >= min) {
                     const totalItem = quantidade * preco;
-                    total += totalItem;
+                    totalBruto += totalItem;
                     totalItens += quantidade;
 
                     if (!gruposResumo[grupo]) {
                         gruposResumo[grupo] = [];
                     }
-                    gruposResumo[grupo].push({ descricao: descricaoResumo, quantidade, totalItem });
+                    gruposResumo[grupo].push({ 
+                        descricao: descricaoResumo, 
+                        quantidade, 
+                        min,
+                        preco, // Adicionado preço individual
+                        totalItem,
+                        itemId,
+                        grupo // Mantém o grupo para verificar se é cookie
+                    });
                 }
             });
             
-            const totalFormatado = total.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-
-            // 1. Atualiza a seção Resumo do Pedido (no corpo da página)
-            for (const grupo in gruposResumo) {
-                resumoItens.innerHTML += `<strong>${grupo}:</strong><br>`;
-                gruposResumo[grupo].forEach(item => {
-                    resumoItens.innerHTML += `${item.descricao} - ${item.quantidade} unidades - R$ ${item.totalItem.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}<br>`;
-                });
-                resumoItens.innerHTML += `<br>`; 
+            // Aplica o desconto do cupom
+            const descontoTotal = cupomAplicado.desconto;
+            let totalLiquido = totalBruto;
+            
+            if (descontoTotal > 0) {
+                totalLiquido = totalBruto - descontoTotal;
             }
 
-            document.getElementById("resumo-total").textContent = `Total: R$ ${totalFormatado}`;
-            document.getElementById("resumo").style.display = total > 0 ? 'block' : 'none';
+            const totalBrutoFormatado = totalBruto.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            const totalLiquidoFormatado = totalLiquido.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            
+            // 1. Atualiza o conteúdo do Pop-up Resumo
+            for (const grupo in gruposResumo) {
+                resumoItensPopup.innerHTML += `<strong>${grupo}:</strong><br>`;
+                gruposResumo[grupo].forEach(item => {
+                    let precoExibicao = '';
+                    const precoTotalItem = item.totalItem;
+                    
+                    // Lógica para aplicar desconto VISUAL no item
+                    if (cupomAplicado.codigo === CUPOM_FAVUCOOKIE && item.grupo === "Cookies" && descontoTotal > 0) {
+                        const descontoPorItem = 2.00; // R$ 2,00 por item de cookie
+                        const precoOriginalItem = precoTotalItem;
+                        const precoTotalComDesconto = precoTotalItem - (item.quantidade * descontoPorItem);
+                        
+                        // Exibe preço riscado e preço com desconto
+                        precoExibicao = `
+                             R$ <span class="price-original-item">${precoOriginalItem.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                             - R$ <span class="price-final-item">${precoTotalComDesconto.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                        `;
+                    } else {
+                        // Se não for cookie ou não tiver desconto aplicado, exibe o preço bruto
+                         precoExibicao = `R$ ${precoTotalItem.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+                    }
+                    
+                    // Geração do item com campo de edição direta
+                    // ATENÇÃO: onblur em vez de oninput para permitir digitação de múltiplos dígitos
+                    resumoItensPopup.innerHTML += `
+                        <div class="resumo-item-line">
+                            <div class="resumo-item-name">
+                                ${item.descricao} 
+                                <small>${precoExibicao}</small>
+                            </div>
+                            <div class="resumo-item-input-group">
+                                <input type="number" 
+                                        min="0" 
+                                        value="${item.quantidade}" 
+                                        data-item-id="${item.itemId}" 
+                                        onblur="atualizarQuantidadeDireta(this)">
+                                un.
+                            </div>
+                            <div class="resumo-item-actions">
+                                <button class="btn-excluir" onclick="excluirItem('${item.itemId}')">EXCLUIR</button>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
 
-            // 2. Atualiza e exibe o Rodapé Fixo
-            if (total > 0) {
-                document.getElementById("summary-total").textContent = `R$ ${totalFormatado}`;
+            // 2. Atualiza o total exibido no Pop-up (incluindo desconto se houver)
+            if (descontoTotal > 0) {
+                 resumoTotalPopup.innerHTML = `
+                     <div class="resumo-total-line">SUBTOTAL: R$ ${totalBrutoFormatado}</div>
+                     <div class="resumo-total-line total-com-desconto">DESCONTO CUPOM: R$ ${descontoTotal.toFixed(2).replace('.', ',')}</div>
+                     <div class="resumo-total">TOTAL: R$ ${totalLiquidoFormatado}</div>
+                   `;
+            } else {
+                 resumoTotalPopup.textContent = `TOTAL: R$ ${totalBrutoFormatado}`;
+                 // Garante que o campo de cupom não mantenha a mensagem de sucesso se o total for 0
+                 const cupomMessage = document.getElementById('cupom-message');
+                 if (totalBruto === 0 && cupomMessage) {
+                    cupomMessage.textContent = '';
+                    cupomAplicado = { codigo: null, desconto: 0, mensagem: '' };
+                 }
+            }
+
+            // 3. Controla a visibilidade do botão "Fazer Pedido" no pop-up (SÓ SE HOUVER ITENS)
+            if (totalBruto > 0) {
+                 fazerPedidoContainer.innerHTML = '<button onclick="abrirPopup()">FAZER PEDIDO</button>';
+            } else {
+                 fazerPedidoContainer.innerHTML = '';
+            }
+
+            // 4. Atualiza e exibe o Rodapé Fixo
+            if (totalBruto > 0) {
+                document.getElementById("summary-total").textContent = `R$ ${totalLiquidoFormatado}`;
                 document.getElementById("summary-item-count").textContent = ` / ${totalItens} ${totalItens === 1 ? 'item' : 'itens'}`;
                 fixedSummary.style.display = 'block';
             } else {
+                document.getElementById("summary-total").textContent = `R$ 0,00`;
+                document.getElementById("summary-item-count").textContent = ` / 0 itens`;
                 fixedSummary.style.display = 'none';
+                fecharResumoPopup();
             }
         }
         
+        // -----------------------------------------------------
+        // FUNÇÕES POPUP (ADICIONADA FUNÇÃO editarPedido)
+        // -----------------------------------------------------
+        function abrirResumoPopup() {
+            // Garante que a mensagem do cupom seja exibida corretamente ao abrir
+            const cupomMessage = document.getElementById('cupom-message');
+            cupomMessage.className = 'cupom-message';
+            cupomMessage.textContent = cupomAplicado.mensagem;
+            
+            const totalText = document.getElementById("summary-total").textContent;
+            const total = parseFloat(totalText.replace('R$ ', '').replace('.', '').replace(',', '.')) || 0; 
+            
+            if (total > 0) {
+                 document.getElementById("popup-resumo").style.display = "flex";
+            } else {
+                 alert("Seu pedido está vazio. Adicione itens para visualizar o resumo!");
+            }
+        }
+        
+        function fecharResumoPopup() {
+            document.getElementById("popup-resumo").style.display = "none";
+        }
+
         function abrirPopup() {
+            fecharResumoPopup(); 
             document.getElementById("popup-pedido").style.display = "flex";
         }
-    
+        
         function fecharPopup() {
             document.getElementById("popup-pedido").style.display = "none";
+        }
+
+        // NOVO BOTÃO: Volta para o popup de resumo
+        function editarPedido() {
+            fecharPopup(); // Fecha o popup de informações do pedido
+            abrirResumoPopup(); // Abre o popup de resumo do pedido
         }
         
         function resetarCampos() {
             document.querySelectorAll(".quantidade-input").forEach(input => {
-                input.value = 0;
+                input.value = "";
             });
-            const resumoItens = document.getElementById("resumo-itens");
-            const resumoTotal = document.getElementById("resumo-total");
+            
+            const resumoItens = document.getElementById("popup-resumo-itens");
+            const resumoTotal = document.getElementById("popup-resumo-total");
             if (resumoItens) resumoItens.innerHTML = '';
             if (resumoTotal) resumoTotal.textContent = '';
+            
+            // Limpa o cupom ao resetar
+            limparCupom();
+
             fecharPopup();
+            fecharResumoPopup();
             atualizarTotal();
             window.scrollTo(0, 0);
         }
@@ -903,6 +1543,10 @@
                 }
             });
 
+            // Aplica desconto para o resumo do WhatsApp
+            const desconto = cupomAplicado.desconto;
+            const totalLiquido = totalPedido - desconto;
+
             for (const grupo in gruposResumo) {
                 resumoWhatsapp += `*${grupo}:*\n`;
                 gruposResumo[grupo].forEach(item => {
@@ -910,8 +1554,12 @@
                 });
                 resumoWhatsapp += `\n`; 
             }
+            
+            if (desconto > 0) {
+                 resumoWhatsapp += `*Desconto Cupom (${cupomAplicado.codigo})*: R$ ${desconto.toFixed(2).replace('.', ',')}\n`;
+            }
 
-            resumoWhatsapp += `*_Total_*: R$ ${totalPedido.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+            resumoWhatsapp += `*_Total Final_*: R$ ${totalLiquido.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
             const nome = document.getElementById("nome").value;
             const data = document.getElementById("data").value;
@@ -934,152 +1582,69 @@
             resetarCampos();
         }
 
-
-        // -----------------------------------------------------
-        // ROLAGEM ÚNICA E PRECISA
-        // -----------------------------------------------------
-
-        function scrollToElement(targetElement) {
-            if (targetElement) {
-                const mainHeader = document.querySelector('header');
-                const stickyNav = document.getElementById('sticky-nav-container');
-                const offset = stickyNav.offsetHeight + mainHeader.offsetHeight + 10; 
-                
-                window.scrollTo({
-                    top: targetElement.offsetTop - offset,
-                    // 'behavior: smooth' está no CSS do HTML, garantindo a suavidade em todos os cliques.
-                });
-            }
-        }
-
+        
         document.addEventListener("DOMContentLoaded", function () {
             
             // 1. Cria as tabelas
             for (const idTabela in gruposItens) {
-                criarTabelaGrupo(gruposItens[idTabela].itens, idTabela, gruposItens[idTabela].nomeGrupo);
+                const tabelaId = idTabela;
+                criarTabelaGrupo(gruposItens[idTabela].itens, tabelaId, gruposItens[idTabela].nomeGrupo);
             }
 
-            // 2. Evento para atualizar o total
+            // 2. Evento para atualizar o total (mantido como input para a tabela principal)
             document.querySelectorAll(".quantidade-input").forEach(input => {
                 input.addEventListener("input", atualizarTotal);
             });
             
-            // 3. Evento de Rolagem (Tabs horizontais)
+            // 3. Evento de Clique nas Abas (Filtro e Rolagem OTIMIZADA)
             const categoriasBar = document.getElementById('categorias-horizontal');
             const links = categoriasBar.querySelectorAll('a');
             
             links.forEach(link => {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
-                    const targetTableId = this.getAttribute('data-target');
-                    // Rola para a DIV pai da tabela (a div .categoria-group)
-                    const targetGroup = document.getElementById(targetTableId).closest('.categoria-group'); 
-                    scrollToElement(targetGroup);
-                });
-            });
-
-            // 4. Highlight na barra horizontal ao rolar (Performance otimizada)
-            const groupElements = document.querySelectorAll('.categoria-group');
-            const mainHeader = document.querySelector('header');
-            const stickyNav = document.getElementById('sticky-nav-container');
-            
-            const observerOffset = stickyNav.offsetHeight + mainHeader.offsetHeight + 10;
-            
-            const observerOptions = {
-                rootMargin: `-${observerOffset}px 0px 0px 0px`, 
-                threshold: 0 
-            };
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    const targetTable = entry.target.querySelector('table');
-                    if (!targetTable) return;
                     
-                    const targetTableId = targetTable.id;
-                    const link = categoriasBar.querySelector(`a[data-target="${targetTableId}"]`);
+                    ativarAba(this);
                     
-                    if (link) {
-                        if (entry.isIntersecting) {
-                            links.forEach(l => l.classList.remove('active-link'));
-                            link.classList.add('active-link');
-                            link.scrollIntoView({ behavior: 'smooth', inline: 'center' }); 
-                        }
+                    // Alvo de rolagem é a IMAGEM do grupo
+                    const targetImageId = this.getAttribute('data-img');
+                    const targetElement = document.getElementById(targetImageId);
+
+                    if (targetElement) {
+                        // Usa a função de rolagem precisa para levar a imagem para o topo
+                        scrollToElement(targetElement);
                     }
                 });
-            }, observerOptions);
-
-            groupElements.forEach(group => {
-                observer.observe(group);
             });
+
+            // 4. Inicia com a primeira aba (Bolos Tradicionais) ativada
+            const primeiroLink = document.querySelector('#categorias-horizontal a[data-target="grupo-bolo-tradicional"]');
+            const primeiroGrupo = document.getElementById('grupo-bolo-tradicional');
             
-            // -----------------------------------------------------
-            // 5. LÓGICA DE BUSCA (FUNCIONAL) - ROLAGEM EXATA
-            // -----------------------------------------------------
-            const searchInput = document.getElementById('search-input');
-            const searchResultsDiv = document.getElementById('search-results');
+            if (primeiroLink) {
+                primeiroLink.classList.add('active-link');
+            }
+            if (primeiroGrupo) {
+                primeiroGrupo.classList.add('active-group');
+            }
             
-            const clearSearch = () => {
-                searchResultsDiv.innerHTML = '';
-                searchResultsDiv.style.display = 'none';
-            };
-
-            // Filtra os itens ao digitar
-            searchInput.addEventListener('input', function() {
-                const termo = this.value.toLowerCase().trim();
-                clearSearch();
-
-                if (termo.length < 2) return;
-
-                const resultadosItens = todosOsItens.filter(item => 
-                    item.nome.toLowerCase().includes(termo)
-                ).slice(0, 5); 
-
-                if (resultadosItens.length > 0) {
-                    resultadosItens.forEach(item => {
-                        const div = document.createElement('div');
-                        div.className = 'search-result-item';
-                        div.textContent = item.nome;
-                        div.dataset.itemId = item.id;
-                        
-                        // Evento de clique no resultado
-                        div.addEventListener('click', function() {
-                            const targetItemId = this.dataset.itemId;
-                            
-                            let targetElement = document.getElementById(`item-${targetItemId}`); 
-                            
-                            if (targetElement) {
-                                const tr = targetElement.closest('tr');
-                                
-                                if (tr) {
-                                    scrollToElement(tr); 
-
-                                    // Efeito visual rápido para destacar o item (TR)
-                                    tr.style.transition = 'background-color 0.3s ease-in-out';
-                                    tr.style.backgroundColor = 'rgba(255, 255, 255, 0.2)'; 
-                                    setTimeout(() => {
-                                        tr.style.backgroundColor = 'transparent';
-                                    }, 1500);
-                                }
-                            }
-                            // Limpa e esconde
-                            searchInput.value = item.nome;
-                            clearSearch();
-                        });
-                        searchResultsDiv.appendChild(div);
-                    });
-                    searchResultsDiv.style.display = 'block';
-                }
-            });
-            
-            // Esconde resultados ao clicar fora da busca
+            // 5. FECHAMENTO DO POPUP AO CLICAR FORA (CORREÇÃO)
             document.addEventListener('click', function(event) {
-                if (event.target !== searchInput && !document.getElementById('search-bar-container').contains(event.target)) {
-                    clearSearch();
+                const popupResumo = document.getElementById('popup-resumo');
+                const popupPedido = document.getElementById('popup-pedido');
+                
+                // Fechando o pop-up de resumo se o clique for no overlay
+                if (popupResumo && popupResumo.style.display === 'flex' && event.target === popupResumo) {
+                    fecharResumoPopup();
+                }
+                
+                // Fechando o pop-up de pedido se o clique for no overlay
+                if (popupPedido && popupPedido.style.display === 'flex' && event.target === popupPedido) {
+                    fecharPopup();
                 }
             });
-            
-            // -----------------------------------------------------
-            
+
+
             const confirmarPedidoButton = document.querySelector('button[onclick="confirmarPedido()"]');
             if (confirmarPedidoButton) {
                 confirmarPedidoButton.addEventListener("click", confirmarPedido);
